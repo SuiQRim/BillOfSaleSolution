@@ -1,13 +1,14 @@
+using BillSale.DAL.Contracts;
+
 namespace BillSale.Entities
 {
     /// <summary>
     /// Продукт
     /// </summary>
-    public class Product
+    public class Product : BaseAuditEntity
     {
         public Product()
         {
-            
         }
 
         /// <summary>

@@ -1,16 +1,17 @@
+using BillSale.DAL.Contracts;
+
 namespace BillSale.Entities
 {
     /// <summary>
     /// Акт приема-передачи
     /// </summary>
-    public class TransferCertificate
+    public class TransferCertificate : BaseAuditEntity
     {
         /// <summary>
         /// ctor
         /// </summary>
         public TransferCertificate()
         {
-            
         }
 
         /// <summary>
@@ -21,7 +22,7 @@ namespace BillSale.Entities
         /// <summary>
         /// Дата оформления документа
         /// </summary>
-        public DateTimeOffset PreparationDate {  get; set; }
+        public DateTimeOffset PreparationDate { get; set; }
 
     }
 }
