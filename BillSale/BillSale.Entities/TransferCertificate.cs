@@ -15,6 +15,31 @@ namespace BillSale.Entities
         }
 
         /// <summary>
+        /// Список продуктов
+        /// </summary>
+        public ICollection<Product> Products { get; set; }
+
+        /// <summary>
+        /// Идентификатор продовца
+        /// </summary>
+        public Guid SellerId { get; set; }
+
+        /// <summary>
+        /// Продовец
+        /// </summary>
+        public Seller Seller { get; set; }
+
+        /// <summary>
+        /// Идентификатор покупателя
+        /// </summary>
+        public Guid PurchaserId { get; set; }
+
+        /// <summary>
+        /// Покупатель
+        /// </summary>
+        public Purchaser Purchaser { get; set; }
+
+        /// <summary>
         /// Город составления документа
         /// </summary>
         public string City { get; set; } = string.Empty;
