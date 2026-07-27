@@ -15,7 +15,7 @@ namespace BillSale.Entities
         }
 
         /// <summary>
-        /// 
+        /// Список продуктов
         /// </summary>
         public ICollection<Product> Products { get; set; }
 
