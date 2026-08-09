@@ -7,9 +7,6 @@ namespace BillSale.Entities
     /// </summary>
     public class Product : BaseAuditEntity
     {
-        public Product()
-        {
-        }
 
         /// <summary>
         /// Наименование продукта
@@ -21,19 +18,5 @@ namespace BillSale.Entities
         /// </summary>
         public string MeasureUnit { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Количество
-        /// </summary>
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Цена за один продукт
-        /// </summary>
-        public decimal Price { get; set; }
-
-        /// <summary>
-        /// Цена за все продукты
-        /// </summary>
-        public decimal TotalPrice => Price * Count;
     }
 }

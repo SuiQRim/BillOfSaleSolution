@@ -8,26 +8,19 @@ namespace BillSale.Entities
     public class TransferCertificate : BaseAuditEntity
     {
         /// <summary>
-        /// ctor
-        /// </summary>
-        public TransferCertificate()
-        {
-        }
-
-        /// <summary>
         /// Список продуктов
         /// </summary>
-        public ICollection<Product> Products { get; set; }
+        public ICollection<TransferCertificateProduct> ProductItems { get; } = [];
 
         /// <summary>
         /// Идентификатор продовца
         /// </summary>
         public Guid SellerId { get; set; }
 
-        /// <summary>
+        /// <summary> 
         /// Продовец
         /// </summary>
-        public Seller Seller { get; set; }
+        public Seller Seller { get; set; } = null!;
 
         /// <summary>
         /// Идентификатор покупателя
@@ -37,7 +30,7 @@ namespace BillSale.Entities
         /// <summary>
         /// Покупатель
         /// </summary>
-        public Purchaser Purchaser { get; set; }
+        public Purchaser Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город составления документа
