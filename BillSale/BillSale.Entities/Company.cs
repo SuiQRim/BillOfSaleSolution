@@ -2,6 +2,9 @@ using BillSale.DAL.Contracts;
 
 namespace BillSale.Entities
 {
+    /// <summary>
+    /// Компания
+    /// </summary>
     public abstract class Company : BaseAuditEntity
     {
         /// <summary>
