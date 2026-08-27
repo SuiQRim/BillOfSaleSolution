@@ -4,6 +4,7 @@
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Contracts/BillSale.DAL.Contracts.csproj" Id="ef55af3b-ef58-4a60-acce-0aba040cf043" />
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Repositories.Contracts/BillSale.DAL.Repositories.Contracts.csproj" Id="96595a7d-f7a8-4dea-8edc-79dd4b9f0958" />
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Repositories/BillSale.DAL.Repositories.csproj" Id="c82f14c7-3cbd-4da9-87a0-6038fce56dac" />
+    <Project Path="DAL/BillSale.DAL.Context.Repositories/BillSale.DAL.Context.Repositories.csproj" Id="6f36b828-16f4-4b26-a353-68901c9aca66" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />

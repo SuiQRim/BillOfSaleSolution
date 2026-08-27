@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BillSale.DAL.Context.Repositories\BillSale.DAL.Context.Repositories.csproj" />
-    <ProjectReference Include="..\BillSale.DAL.Repositories.Contracts\BillSale.DAL.Repositories.Contracts.csproj" />
+    <ProjectReference Include="..\BillSale.DAL.Contracts\BillSale.DAL.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

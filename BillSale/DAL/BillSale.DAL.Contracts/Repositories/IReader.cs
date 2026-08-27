@@ -10,6 +10,6 @@ namespace BillSale.DAL.Contracts.Repositories
         /// <summary>
         /// Предоставляет функциональные возможности для выполнения запросов
         /// </summary>
-        IQueryable<IEntity> Read<TEntity>() where TEntity : class, IEntity;
+        IQueryable<TEntity> Read<TEntity>() where TEntity : class, IEntity;
     }
 }
