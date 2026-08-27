@@ -1,3 +1,4 @@
+using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 
@@ -7,9 +8,13 @@ namespace BillSale.DAL.Repositories
     {
         private readonly IReader reader;
 
-        public TransferCertificateRepository()
+        /// <summary>
+        /// ctor.
+        /// </summary>
+        /// <param name="reader"></param>
+        public TransferCertificateRepository(IReader reader)
         {
-            
+            this.reader = reader;
         }
 
         public async Task<IReadOnlyCollection<TransferCertificate>> GetSertificateAsync(CancellationToken cancellationToken)
