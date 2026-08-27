@@ -5,7 +5,7 @@ namespace BillSale.DAL.Contracts.Repositories
     /// <summary>
     /// Интерфейс создания и модификации записей в контексте
     /// </summary>
-    internal interface IWriter
+    public interface IWriter
     {
         /// <summary>
         /// Добавить новую запись
@@ -19,7 +19,7 @@ namespace BillSale.DAL.Contracts.Repositories
         /// </summary>
         /// <typeparam name="TEntity">Тип сущности</typeparam>
         /// <param name="entity">Сущность</param>
-        void Edit<TEntity>(TEntity entity) where TEntity : class, IEntity;
+        void Update<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
 
         /// <summary>
