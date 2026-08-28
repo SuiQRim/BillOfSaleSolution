@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\BillSale.Common\BillSale.Common.csproj" />
+    <ProjectReference Include="..\BillSale.DAL.Contracts\BillSale.DAL.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

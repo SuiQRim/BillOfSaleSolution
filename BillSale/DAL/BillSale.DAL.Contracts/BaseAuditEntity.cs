@@ -6,6 +6,7 @@ namespace BillSale.DAL.Contracts
     /// Базовый класс с аудитом
     /// </summary>
     public abstract class BaseAuditEntity :
+        IEntity,
         IEntityWithId,
         IEntityAuditCreated,
         IEntityAuditUpdate,
