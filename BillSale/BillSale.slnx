@@ -1,16 +1,20 @@
 <Solution>
+  <Folder Name="/BLL/">
+    <Project Path="BillSale.BLL.Services.Contracts/BillSale.BLL.Services.Contracts.csproj" Id="7a2413ca-c573-4354-ac37-aa7d7ede35c2" />
+    <Project Path="BLL/BillSale.BLL.Services/BillSale.BLL.Services.csproj" Id="5e9ea5a3-0395-42c4-a394-2364a97691d9" />
+  </Folder>
   <Folder Name="/DAL/">
-    <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Context/BillSale.DAL.Context.csproj" Id="d9efa158-cc94-473a-b5d4-2195c5a3b922" />
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Contracts/BillSale.DAL.Contracts.csproj" Id="ef55af3b-ef58-4a60-acce-0aba040cf043" />
-    <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Repositories.Contracts/BillSale.DAL.Repositories.Contracts.csproj" Id="96595a7d-f7a8-4dea-8edc-79dd4b9f0958" />
-    <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Repositories/BillSale.DAL.Repositories.csproj" Id="c82f14c7-3cbd-4da9-87a0-6038fce56dac" />
     <Project Path="DAL/BillSale.DAL.Context.Repositories/BillSale.DAL.Context.Repositories.csproj" Id="6f36b828-16f4-4b26-a353-68901c9aca66" />
+    <Project Path="DAL/BillSale.DAL.Context/BillSale.DAL.Context.csproj" Id="d9efa158-cc94-473a-b5d4-2195c5a3b922" />
+    <Project Path="DAL/BillSale.DAL.Repositories.Contracts/BillSale.DAL.Repositories.Contracts.csproj" Id="96595a7d-f7a8-4dea-8edc-79dd4b9f0958" />
+    <Project Path="DAL/BillSale.DAL.Repositories/BillSale.DAL.Repositories.csproj" Id="c82f14c7-3cbd-4da9-87a0-6038fce56dac" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="BillSale.Common/BillSale.Common.csproj" Id="72d56b17-449a-4e65-95ff-d7b18c62603e" />
-  <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/BillSale.Context.EntityFrameworkCore/BillSale.Context.EntityFrameworkCore.csproj" Id="5ab3ffa2-4e4d-4d44-9dd7-c0c45e03375f" />
-  <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/BillSale.Entities.Configurations/BillSale.Entities.Configurations.csproj" Id="56933f90-8fb8-4863-a8d2-850bdc1021fc" />
+  <Project Path="BillSale.Context.EntityFrameworkCore/BillSale.Context.EntityFrameworkCore.csproj" Id="5ab3ffa2-4e4d-4d44-9dd7-c0c45e03375f" />
+  <Project Path="BillSale.Entities.Configurations/BillSale.Entities.Configurations.csproj" Id="56933f90-8fb8-4863-a8d2-850bdc1021fc" />
   <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/BillSale.Entities/BillSale.Entities.csproj" Id="f784dbc2-8df3-41be-be2a-6ca823f70bce" />
 </Solution>
