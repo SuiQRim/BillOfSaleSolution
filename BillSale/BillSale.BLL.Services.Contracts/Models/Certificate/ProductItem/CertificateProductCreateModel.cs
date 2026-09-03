@@ -1,15 +1,10 @@
-namespace BillSale.BLL.Services.Contracts.Models.Certificate.Product
+namespace BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem
 {
     /// <summary>
-    /// Модель обновления продукта в акте
+    /// Модель создания продукта в акте
     /// </summary>
-    public class CertificateProductUpdateModel
+    public class CertificateProductCreateModel
     {
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Идентификатор продукта
         /// </summary>

@@ -12,7 +12,7 @@ namespace BillSale.BLL.Services.Contracts
         /// </summary>
         /// <param name="cancellationToken">Токен отслеживания</param>
         /// <returns>Список актов</returns>
-        Task<IReadOnlyCollection<CertificateModel>> GetCertificates(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<CertificateModel>> GetCertificatesAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Получение акта по идентификатору
@@ -20,7 +20,7 @@ namespace BillSale.BLL.Services.Contracts
         /// <param name="id">Идентификатор</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
         /// <returns>Акт</returns>
-        Task<CertificateModel> GetCertificateById(Guid id, CancellationToken cancellationToken);
+        Task<CertificateModel> GetCertificateByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получение подробного акта по идентификатору
@@ -28,28 +28,28 @@ namespace BillSale.BLL.Services.Contracts
         /// <param name="id">Идентификатор</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
         /// <returns>Детальный акт</returns>
-        Task<CertificateDetailModel> GetDetailCertificateById(Guid id, CancellationToken cancellationToken);
+        Task<CertificateDetailModel> GetDetailCertificateByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавление акта
         /// </summary>
         /// <param name="certificateModel">Акт</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task AddCertificate(CertificateCreateModel certificateModel, CancellationToken cancellationToken);
+        Task AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновление акта
         /// </summary>
         /// <param name="certificateModel">Акт</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task UpdateCertificate(CertificateUpdateModel certificateModel, CancellationToken cancellationToken);
+        Task UpdateCertificateAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаление акта
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task DeleteCertificate(Guid id, CancellationToken cancellationToken);
+        Task DeleteCertificateAsync(Guid id, CancellationToken cancellationToken);
 
     }
 }

@@ -1,15 +1,10 @@
-namespace BillSale.BLL.Services.Contracts.Models
+namespace BillSale.BLL.Services.Contracts.Models.Company
 {
     /// <summary>
-    /// Подробная модель компании
+    /// Модель создания компании
     /// </summary>
-    public class CompanyDetailsModel
+    public class CompanyCreateModel
     {
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Наименование организации
         /// </summary>

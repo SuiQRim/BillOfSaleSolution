@@ -1,4 +1,5 @@
 using BillSale.BLL.Services.Contracts.Models.Certificate.Product;
+using BillSale.BLL.Services.Contracts.Models.Company;
 
 namespace BillSale.BLL.Services.Contracts.Models.Certificate
 {
@@ -15,12 +16,12 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         /// <summary>
         /// Продавец
         /// </summary>
-        public CompanyDetailsModel Seller { get; set; } = null!;
+        public CompanyModel Seller { get; set; } = null!;
 
         /// <summary>
         /// Покупатель
         /// </summary>
-        public CompanyDetailsModel Purchaser { get; set; } = null!;
+        public CompanyModel Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город

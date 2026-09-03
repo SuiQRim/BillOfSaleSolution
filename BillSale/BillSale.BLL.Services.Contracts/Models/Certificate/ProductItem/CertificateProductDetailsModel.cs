@@ -1,4 +1,4 @@
-namespace BillSale.BLL.Services.Contracts.Models.Certificate.Product
+namespace BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem
 {
     /// <summary>
     /// Подробная модель продукта сертификата
