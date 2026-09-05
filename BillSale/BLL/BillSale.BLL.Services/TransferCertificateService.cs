@@ -7,11 +7,21 @@ using BillSale.Entities;
 
 namespace BillSale.BLL.Services
 {
+    /// <summary>
+    /// Сервис для работы с <see cref="TransferCertificate"/>
+    /// </summary>
     public class TransferCertificateService : ITransferCertificateService
     {
         private readonly ITransferCertificateRepository certificateRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="certificateRepository">Репозиторий сущности</param>
+        /// <param name="unitOfWork">Обьект еденицы работы</param>
+        /// <param name="mapper">маппер</param>
         public TransferCertificateService(ITransferCertificateRepository certificateRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.certificateRepository = certificateRepository;
@@ -19,12 +29,14 @@ namespace BillSale.BLL.Services
             this.mapper = mapper;
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyCollection<CertificateModel>> GetCertificatesAsync(CancellationToken cancellationToken)
         {
             var certificates = await certificateRepository.GetCertificatesAsync(cancellationToken);
             return mapper.Map<IReadOnlyCollection<CertificateModel>>(certificates);
         }
 
+        /// <inheritdoc />
         public async Task<CertificateModel> GetCertificateByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
@@ -37,14 +49,31 @@ namespace BillSale.BLL.Services
 
         }
 
+        /// <inheritdoc />
         public async Task<CertificateDetailModel> GetDetailCertificateByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await certificateRepository.GetCertificateById();
+            var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
+            return mapper.Map<CertificateDetailModel>(entity);
         }
 
-        public Task UpdateCertificateAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken) => throw new NotImplementedException();
+        /// <inheritdoc />
+        public async Task UpdateCertificateAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken)
+        {
+            // TODO: Сделать нормальное обновление для ProductItem
+            var entity = await certificateRepository.GetCertificateById(certificateModel.Id, cancellationToken);
+            if (entity is null)
+            {
+                // TODO: Заменить на кастомные
+                throw new Exception($"Такого сертификата нет id - {certificateModel.Id}");
+            }
 
+            mapper.Map(certificateModel, entity);
+            certificateRepository.Update(entity);
 
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <inheritdoc />
         public async Task AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken)
         {
             var entity = mapper.Map<TransferCertificate>(certificateModel);
@@ -52,6 +81,7 @@ namespace BillSale.BLL.Services
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
+        /// <inheritdoc />
         public async Task DeleteCertificateAsync(Guid id, CancellationToken cancellationToken)
         {
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
@@ -64,7 +94,5 @@ namespace BillSale.BLL.Services
             certificateRepository.Delete(entity);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
-
-       
     }
 }
