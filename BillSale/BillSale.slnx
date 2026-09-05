@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/BLL/">
+    <Project Path="BillSale.BLL.Services.Contracts/BillSale.BLL.Services.Contracts.csproj" Id="7a2413ca-c573-4354-ac37-aa7d7ede35c2" />
+    <Project Path="BLL/BillSale.BLL.Services/BillSale.BLL.Services.csproj" Id="5e9ea5a3-0395-42c4-a394-2364a97691d9" />
+  </Folder>
   <Folder Name="/DAL/">
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Contracts/BillSale.DAL.Contracts.csproj" Id="ef55af3b-ef58-4a60-acce-0aba040cf043" />
     <Project Path="DAL/BillSale.DAL.Context.Repositories/BillSale.DAL.Context.Repositories.csproj" Id="6f36b828-16f4-4b26-a353-68901c9aca66" />

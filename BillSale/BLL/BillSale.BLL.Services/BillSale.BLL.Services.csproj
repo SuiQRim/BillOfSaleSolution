@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BillSale.BLL.Services.Contracts\BillSale.BLL.Services.Contracts.csproj" />
+    <ProjectReference Include="..\..\DAL\BillSale.DAL.Repositories.Contracts\BillSale.DAL.Repositories.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BillSale.DAL.Repositories
 {
-    public class TransferCertificateRepository : ITransferCertificateRepository
+    /// <summary>
+    /// Репозиторий работы с сущностю <see cref="TransferCertificate">
+    /// </summary>
+    public class TransferCertificateRepository : BaseWriteRepository<TransferCertificate>, ITransferCertificateRepository
     {
         private readonly IReader reader;
 
@@ -14,20 +17,33 @@ namespace BillSale.DAL.Repositories
         /// ctor.
         /// </summary>
         /// <param name="reader"></param>
-        public TransferCertificateRepository(IReader reader)
+        public TransferCertificateRepository(IDbWriterContext writerContext, IReader reader) : base(writerContext)
         {
             this.reader = reader;
         }
 
-        public async Task<IReadOnlyCollection<TransferCertificate>> GetSertificateAsync(CancellationToken cancellationToken)
+        /// <inheritdoc />
+        public async Task<IReadOnlyCollection<TransferCertificate>> GetCertificatesAsync(CancellationToken cancellationToken)
             => await reader.Read<TransferCertificate>()
                 .NotDeletedAt()
                 .OrderBy(x => x.City)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
-        public async Task<TransferCertificate?> GetSertificateById(Guid id, CancellationToken cancellationToken)
+        /// <inheritdoc />
+        public async Task<TransferCertificate?> GetCertificateById(Guid id, CancellationToken cancellationToken)
             => await reader.Read<TransferCertificate>()
                 .NotDeletedAt()
+                .ById(id)
+                .FirstOrDefaultAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public async Task<TransferCertificate?> GetCertificateDetailById(Guid id, CancellationToken cancellationToken)
+           => await reader.Read<TransferCertificate>()
+                .NotDeletedAt()
+                .Include(x => x.Seller)
+                .Include(x => x.Purchaser)
+                .Include(x => x.ProductItems)
+                    .ThenInclude(x => x.Product)
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
     }
