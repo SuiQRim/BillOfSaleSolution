@@ -35,11 +35,11 @@ namespace BillSale.API.Controllers
             return Ok(mapper.Map<CertificateApiModel>(certificates));
         }
 
-        //[HttpGet("details/{id:guid}")]
-        //public async Task<IActionResult> GetDetailsById(Guid id, CancellationToken cancellationToken)
-        //{
-        //    var certificates = await certificateService.GetDetailCertificateByIdAsync(id, cancellationToken);
-        //    return Ok(certificates);
-        //}
+        [HttpGet("details/{id:guid}")]
+        public async Task<IActionResult> GetDetailsById(Guid id, CancellationToken cancellationToken)
+        {
+            var certificates = await certificateService.GetDetailCertificateByIdAsync(id, cancellationToken);
+            return Ok(certificates);
+        }
     }
 }

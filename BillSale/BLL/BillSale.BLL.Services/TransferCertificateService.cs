@@ -52,7 +52,7 @@ namespace BillSale.BLL.Services
         /// <inheritdoc />
         public async Task<CertificateDetailModel> GetDetailCertificateByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
+            var entity = await certificateRepository.GetCertificateDetailById(id, cancellationToken);
             return mapper.Map<CertificateDetailModel>(entity);
         }
 
