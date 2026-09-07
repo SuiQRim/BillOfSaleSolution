@@ -8,7 +8,14 @@ namespace BillSale.BLL.Services.Automapper
     {
         public ServiceProfile()
         {
-            CreateMap<TransferCertificate, CertificateModel>().ReverseMap();
+            CreateMap<TransferCertificate, CertificateModel>()
+                .ForMember(
+                    dest => dest.SellerName,
+                    opt => opt.MapFrom(src => src.Seller.OrganizationName))
+                .ForMember(
+                    dest => dest.PurchaserName,
+                    opt => opt.MapFrom(src => src.Purchaser.OrganizationName));
+
             CreateMap<CertificateCreateModel, TransferCertificate>();
         }
     }

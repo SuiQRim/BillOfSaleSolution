@@ -1,4 +1,4 @@
-using BillSale.BLL.Services.Contracts.Models.Certificate.Product;
+using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
 
 namespace BillSale.BLL.Services.Contracts.Models.Certificate
 {

@@ -26,6 +26,8 @@ namespace BillSale.DAL.Repositories
         public async Task<IReadOnlyCollection<TransferCertificate>> GetCertificatesAsync(CancellationToken cancellationToken)
             => await reader.Read<TransferCertificate>()
                 .NotDeletedAt()
+                .Include(x => x.Purchaser)
+                .Include(x => x.Seller)
                 .OrderBy(x => x.City)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
@@ -33,6 +35,8 @@ namespace BillSale.DAL.Repositories
         public async Task<TransferCertificate?> GetCertificateById(Guid id, CancellationToken cancellationToken)
             => await reader.Read<TransferCertificate>()
                 .NotDeletedAt()
+                .Include(x => x.Purchaser)
+                .Include(x => x.Seller)
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
 
