@@ -33,7 +33,14 @@ namespace BillSale.BLL.Services.Automapper
                     dest => dest.Products,
                     opt => opt.MapFrom(src => src.ProductItems));
 
-            CreateMap<CertificateCreateModel, TransferCertificate>();
+            CreateMap<CertificateCreateModel, TransferCertificate>()
+                   .ForMember(
+                       dest => dest.ProductItems,
+                       opt => opt.MapFrom(src => src.Products));
+
+            CreateMap<CertificateProductCreateModel, TransferCertificateProduct>();
+
+            CreateMap<CertificateUpdateModel, TransferCertificate>();
         }
     }
 }

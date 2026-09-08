@@ -1,5 +1,8 @@
-namespace BillSale.API.Models
+namespace BillSale.API.Models.Certificate
 {
+    /// <summary>
+    /// Модель акта приема-передачи
+    /// </summary>
     public class CertificateApiModel
     {
         /// <summary>
@@ -8,12 +11,12 @@ namespace BillSale.API.Models
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Имя продавца
+        /// Идентификатор продавца
         /// </summary>
         public string SellerName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Имя покупателя
+        /// Идентификатор покупателя
         /// </summary>
         public string PurchaserName { get; set; } = string.Empty;
 
@@ -22,9 +25,5 @@ namespace BillSale.API.Models
         /// </summary>
         public string City { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Дата создания
-        /// </summary>
-        public DateTimeOffset PreparationDate { get; set; }
     }
 }

@@ -74,11 +74,12 @@ namespace BillSale.BLL.Services
         }
 
         /// <inheritdoc />
-        public async Task AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken)
+        public async Task<CertificateDetailModel> AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken)
         {
             var entity = mapper.Map<TransferCertificate>(certificateModel);
             certificateRepository.Add(entity);
             await unitOfWork.SaveChangesAsync(cancellationToken);
+            return await GetDetailCertificateByIdAsync(entity.Id, cancellationToken);
         }
 
         /// <inheritdoc />

@@ -35,7 +35,7 @@ namespace BillSale.BLL.Services.Contracts
         /// </summary>
         /// <param name="certificateModel">Акт</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken);
+        Task<CertificateDetailModel> AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновление акта
