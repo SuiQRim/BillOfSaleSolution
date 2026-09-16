@@ -6,8 +6,14 @@ using BillSale.Entities;
 
 namespace BillSale.BLL.Services.Automapper
 {
+    /// <summary>
+    /// Профиль маппера сервиса
+    /// </summary>
     public class ServiceProfile : Profile
     {
+        /// <summary>
+        /// ctor профиль
+        /// </summary>
         public ServiceProfile()
         {
             CreateMap<TransferCertificate, CertificateModel>()
@@ -21,6 +27,7 @@ namespace BillSale.BLL.Services.Automapper
             CreateMap<TransferCertificate, CertificateDetailModel>();
             CreateMap<Seller, CompanyModel>();
             CreateMap<Purchaser, CompanyModel>();
+
             CreateMap<TransferCertificateProduct, CertificateProductDetailsModel>()
                 .ForMember(
                     dest => dest.ProductName,
@@ -28,6 +35,7 @@ namespace BillSale.BLL.Services.Automapper
                 .ForMember(
                     dest => dest.MeasureUnit,
                     opt => opt.MapFrom(src => src.Product.MeasureUnit));
+
             CreateMap<TransferCertificate, CertificateDetailModel>()
                 .ForMember(
                     dest => dest.Products,

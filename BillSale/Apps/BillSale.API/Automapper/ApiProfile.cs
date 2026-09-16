@@ -16,7 +16,7 @@ namespace BillSale.API.Automapper
     public class ApiProfile : Profile
     {
         /// <summary>
-        /// ctor
+        /// ctor профиль
         /// </summary>
         public ApiProfile()
         {
