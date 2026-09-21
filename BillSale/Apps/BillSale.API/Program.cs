@@ -19,6 +19,8 @@ builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddSingleton<IIdentityProvider, IdentityProvider>();
 
 builder.Services.AddScoped<ITransferCertificateRepository, TransferCertificateRepository>();
+builder.Services.AddScoped<ICertificateProductItemRepository, TransferCertificateProductRepository>();
+
 builder.Services.AddScoped<ITransferCertificateService, TransferCertificateService>();
 builder.Services.AddScoped<IDbWriterContext, DbWriterContext>();
 builder.Services.AddAutoMapper(x =>

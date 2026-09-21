@@ -41,13 +41,20 @@ namespace BillSale.BLL.Services.Automapper
                     opt => opt.MapFrom(src => src.ProductItems));
 
             CreateMap<CertificateCreateModel, TransferCertificate>()
-                   .ForMember(
-                       dest => dest.ProductItems,
-                       opt => opt.MapFrom(src => src.Products));
+                .ForMember(
+                    dest => dest.ProductItems,
+                    opt => opt.MapFrom(src => src.Products));
 
             CreateMap<CertificateProductCreateModel, TransferCertificateProduct>();
 
-            CreateMap<CertificateUpdateModel, TransferCertificate>();
+            CreateMap<CertificateUpdateModel, TransferCertificate>()
+                .ForMember(
+                    dest => dest.ProductItems,
+                    opt => opt.Ignore());
+
+            CreateMap<CertificateProductUpdateModel, TransferCertificateProduct>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.TransferCertificateId, opt => opt.Ignore());
         }
     }
 }

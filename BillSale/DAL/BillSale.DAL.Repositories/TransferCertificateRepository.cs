@@ -46,7 +46,7 @@ namespace BillSale.DAL.Repositories
                 .NotDeletedAt()
                 .Include(x => x.Seller)
                 .Include(x => x.Purchaser)
-                .Include(x => x.ProductItems)
+                .Include(x => x.ProductItems.Where(p => p.DeletedAt == null))
                     .ThenInclude(x => x.Product)
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);

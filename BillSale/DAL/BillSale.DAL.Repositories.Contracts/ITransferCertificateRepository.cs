@@ -27,5 +27,6 @@ namespace BillSale.DAL.Repositories.Contracts
         /// <param name="id">Идентификатор</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
         Task<TransferCertificate?> GetCertificateDetailById(Guid id, CancellationToken cancellationToken);
+
     }
 }
