@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BillSale.Context
 {
     /// <summary>
-    /// Начальные данные для базы данных.
-    /// Полностью сгенерированный класс
+    /// Начальные данные для базы данных. Полностью сгенерированный класс
     /// </summary>
     internal static class SeedData
     {
@@ -21,13 +20,12 @@ namespace BillSale.Context
 
         public static void Seed(ModelBuilder modelBuilder)
         {
-            var seller1Id = Guid.Parse("10000000-0000-0000-0000-000000000001");
-            var seller2Id = Guid.Parse("10000000-0000-0000-0000-000000000002");
-            var seller3Id = Guid.Parse("10000000-0000-0000-0000-000000000003");
-
-            var purchaser1Id = Guid.Parse("20000000-0000-0000-0000-000000000001");
-            var purchaser2Id = Guid.Parse("20000000-0000-0000-0000-000000000002");
-            var purchaser3Id = Guid.Parse("20000000-0000-0000-0000-000000000003");
+            var company1Id = Guid.Parse("10000000-0000-0000-0000-000000000001");
+            var company2Id = Guid.Parse("10000000-0000-0000-0000-000000000002");
+            var company3Id = Guid.Parse("10000000-0000-0000-0000-000000000003");
+            var company4Id = Guid.Parse("20000000-0000-0000-0000-000000000001");
+            var company5Id = Guid.Parse("20000000-0000-0000-0000-000000000002");
+            var company6Id = Guid.Parse("20000000-0000-0000-0000-000000000003");
 
             var product1Id = Guid.Parse("30000000-0000-0000-0000-000000000001");
             var product2Id = Guid.Parse("30000000-0000-0000-0000-000000000002");
@@ -63,8 +61,14 @@ namespace BillSale.Context
             var item15Id = Guid.Parse("50000000-0000-0000-0000-000000000015");
             var item16Id = Guid.Parse("50000000-0000-0000-0000-000000000016");
 
-            SeedSellers(modelBuilder, seller1Id, seller2Id, seller3Id);
-            SeedPurchasers(modelBuilder, purchaser1Id, purchaser2Id, purchaser3Id);
+            SeedCompanies(
+                modelBuilder,
+                company1Id,
+                company2Id,
+                company3Id,
+                company4Id,
+                company5Id,
+                company6Id);
 
             SeedProducts(
                 modelBuilder,
@@ -86,12 +90,12 @@ namespace BillSale.Context
                 certificate3Id,
                 certificate4Id,
                 certificate5Id,
-                seller1Id,
-                seller2Id,
-                seller3Id,
-                purchaser1Id,
-                purchaser2Id,
-                purchaser3Id);
+                company1Id,
+                company2Id,
+                company3Id,
+                company4Id,
+                company5Id,
+                company6Id);
 
             SeedCertificateProducts(
                 modelBuilder,
@@ -128,16 +132,19 @@ namespace BillSale.Context
                 product10Id);
         }
 
-        private static void SeedSellers(
+        private static void SeedCompanies(
             ModelBuilder modelBuilder,
-            Guid seller1Id,
-            Guid seller2Id,
-            Guid seller3Id)
+            Guid company1Id,
+            Guid company2Id,
+            Guid company3Id,
+            Guid company4Id,
+            Guid company5Id,
+            Guid company6Id)
         {
-            modelBuilder.Entity<Seller>().HasData(
-                new Seller
+            modelBuilder.Entity<Company>().HasData(
+                new Company
                 {
-                    Id = seller1Id,
+                    Id = company1Id,
                     OrganizationName = "ООО «ТехноСнаб»",
                     Post = "Генеральный директор",
                     FirstName = "Алексей",
@@ -150,9 +157,9 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new Seller
+                new Company
                 {
-                    Id = seller2Id,
+                    Id = company2Id,
                     OrganizationName = "ООО «СеверТорг»",
                     Post = "Директор",
                     FirstName = "Дмитрий",
@@ -165,9 +172,9 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new Seller
+                new Company
                 {
-                    Id = seller3Id,
+                    Id = company3Id,
                     OrganizationName = "АО «ПромКомплект»",
                     Post = "Коммерческий директор",
                     FirstName = "Максим",
@@ -179,19 +186,10 @@ namespace BillSale.Context
                     UpdatedAt = updatedAt,
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
-                });
-        }
-
-        private static void SeedPurchasers(
-            ModelBuilder modelBuilder,
-            Guid purchaser1Id,
-            Guid purchaser2Id,
-            Guid purchaser3Id)
-        {
-            modelBuilder.Entity<Purchaser>().HasData(
-                new Purchaser
+                },
+                new Company
                 {
-                    Id = purchaser1Id,
+                    Id = company4Id,
                     OrganizationName = "ООО «Вектор»",
                     Post = "Генеральный директор",
                     FirstName = "Иван",
@@ -204,9 +202,9 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new Purchaser
+                new Company
                 {
-                    Id = purchaser2Id,
+                    Id = company5Id,
                     OrganizationName = "ООО «Балтика»",
                     Post = "Директор по закупкам",
                     FirstName = "Николай",
@@ -219,9 +217,9 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new Purchaser
+                new Company
                 {
-                    Id = purchaser3Id,
+                    Id = company6Id,
                     OrganizationName = "ИП «Морозов»",
                     Post = "Индивидуальный предприниматель",
                     FirstName = "Евгений",
@@ -369,19 +367,20 @@ namespace BillSale.Context
             Guid certificate3Id,
             Guid certificate4Id,
             Guid certificate5Id,
-            Guid seller1Id,
-            Guid seller2Id,
-            Guid seller3Id,
-            Guid purchaser1Id,
-            Guid purchaser2Id,
-            Guid purchaser3Id)
+            Guid company1Id,
+            Guid company2Id,
+            Guid company3Id,
+            Guid company4Id,
+            Guid company5Id,
+            Guid company6Id)
         {
             modelBuilder.Entity<TransferCertificate>().HasData(
                 new TransferCertificate
                 {
                     Id = certificate1Id,
-                    SellerId = seller1Id,
-                    PurchaserId = purchaser1Id,
+                    ArticulNumber = 1001,
+                    SellerId = company1Id,
+                    PurchaserId = company4Id,
                     City = "Санкт-Петербург",
                     PreparationDate = new DateTimeOffset(
                         2026, 1, 15, 11, 30, 0, TimeSpan.Zero),
@@ -394,8 +393,9 @@ namespace BillSale.Context
                 new TransferCertificate
                 {
                     Id = certificate2Id,
-                    SellerId = seller2Id,
-                    PurchaserId = purchaser2Id,
+                    ArticulNumber = 1002,
+                    SellerId = company2Id,
+                    PurchaserId = company5Id,
                     City = "Москва",
                     PreparationDate = new DateTimeOffset(
                         2026, 2, 3, 14, 0, 0, TimeSpan.Zero),
@@ -408,8 +408,9 @@ namespace BillSale.Context
                 new TransferCertificate
                 {
                     Id = certificate3Id,
-                    SellerId = seller3Id,
-                    PurchaserId = purchaser1Id,
+                    ArticulNumber = 1003,
+                    SellerId = company3Id,
+                    PurchaserId = company4Id,
                     City = "Псков",
                     PreparationDate = new DateTimeOffset(
                         2026, 3, 20, 10, 15, 0, TimeSpan.Zero),
@@ -422,8 +423,9 @@ namespace BillSale.Context
                 new TransferCertificate
                 {
                     Id = certificate4Id,
-                    SellerId = seller1Id,
-                    PurchaserId = purchaser3Id,
+                    ArticulNumber = 1004,
+                    SellerId = company1Id,
+                    PurchaserId = company6Id,
                     City = "Великий Новгород",
                     PreparationDate = new DateTimeOffset(
                         2026, 4, 8, 13, 45, 0, TimeSpan.Zero),
@@ -436,8 +438,9 @@ namespace BillSale.Context
                 new TransferCertificate
                 {
                     Id = certificate5Id,
-                    SellerId = seller2Id,
-                    PurchaserId = purchaser3Id,
+                    ArticulNumber = 1005,
+                    SellerId = company2Id,
+                    PurchaserId = company6Id,
                     City = "Тверь",
                     PreparationDate = new DateTimeOffset(
                         2026, 5, 12, 16, 20, 0, TimeSpan.Zero),

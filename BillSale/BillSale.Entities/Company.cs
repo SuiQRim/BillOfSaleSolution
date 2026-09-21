@@ -5,7 +5,7 @@ namespace BillSale.Entities
     /// <summary>
     /// Компания
     /// </summary>
-    public abstract class Company : BaseAuditEntity
+    public class Company : BaseAuditEntity
     {
         /// <summary>
         /// Название организации

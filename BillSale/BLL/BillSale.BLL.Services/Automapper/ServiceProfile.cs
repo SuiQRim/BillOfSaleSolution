@@ -25,8 +25,7 @@ namespace BillSale.BLL.Services.Automapper
                     opt => opt.MapFrom(src => src.Purchaser.OrganizationName));
 
             CreateMap<TransferCertificate, CertificateDetailModel>();
-            CreateMap<Seller, CompanyModel>();
-            CreateMap<Purchaser, CompanyModel>();
+            CreateMap<Company, CompanyModel>();
 
             CreateMap<TransferCertificateProduct, CertificateProductDetailsModel>()
                 .ForMember(

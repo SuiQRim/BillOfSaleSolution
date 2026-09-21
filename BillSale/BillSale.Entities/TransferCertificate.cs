@@ -7,6 +7,7 @@ namespace BillSale.Entities
     /// </summary>
     public class TransferCertificate : BaseAuditEntity
     {
+        public int ArticulNumber { get; set; }
         /// <summary>
         /// Список продуктов
         /// </summary>
@@ -20,7 +21,7 @@ namespace BillSale.Entities
         /// <summary> 
         /// Продовец
         /// </summary>
-        public Seller Seller { get; set; } = null!;
+        public Company Seller { get; set; } = null!;
 
         /// <summary>
         /// Идентификатор покупателя
@@ -30,7 +31,7 @@ namespace BillSale.Entities
         /// <summary>
         /// Покупатель
         /// </summary>
-        public Purchaser Purchaser { get; set; } = null!;
+        public Company Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город составления документа
