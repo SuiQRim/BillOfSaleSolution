@@ -1,5 +1,4 @@
 using AutoMapper;
-using BillSale.API.Implementations;
 using BillSale.API.Models.Certificate;
 using BillSale.BLL.Services.Contracts;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
@@ -39,6 +38,7 @@ namespace BillSale.API.Controllers
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(CertificateApiModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var certificates = await certificateService.GetCertificateByIdAsync(id, cancellationToken);
@@ -47,6 +47,7 @@ namespace BillSale.API.Controllers
 
         [HttpGet("details/{id:guid}")]
         [ProducesResponseType(typeof(CertificateDetailsApiModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDetailsById(Guid id, CancellationToken cancellationToken)
         {
             var certificates = await certificateService.GetDetailCertificateByIdAsync(id, cancellationToken);
@@ -55,6 +56,7 @@ namespace BillSale.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CertificateDetailsApiModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Create([FromBody] CertificateCreateApiModel model, CancellationToken cancellationToken)
         {
             var mapped = mapper.Map<CertificateCreateModel>(model);
@@ -66,6 +68,7 @@ namespace BillSale.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Update([FromBody] CertificateUpdateApiModel model, CancellationToken cancellationToken)
         {
             var mapped = mapper.Map<CertificateUpdateModel>(model);
@@ -77,6 +80,7 @@ namespace BillSale.API.Controllers
 
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
         {
             await certificateService.DeleteCertificateAsync(id, cancellationToken);

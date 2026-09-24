@@ -1,5 +1,8 @@
 namespace BillSale.Common
 {
+    /// <summary>
+    /// Класс хранящий информацию об ошибки валидации
+    /// </summary>
     public class InvalidateItemModel
     {
         /// <summary>

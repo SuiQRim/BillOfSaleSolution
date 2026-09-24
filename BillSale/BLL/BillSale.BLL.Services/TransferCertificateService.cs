@@ -2,14 +2,12 @@ using AutoMapper;
 using BillSale.BLL.Services.Contracts;
 using BillSale.BLL.Services.Contracts.Exceptions;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
-using BillSale.BLL.Services.Contracts.Models.Product;
 using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 
 namespace BillSale.BLL.Services
 {
-    //TODO: Исключения когда ошибки поиска дочерних обьектов
     /// <summary>
     /// Сервис для работы с <see cref="TransferCertificate"/>
     /// </summary>
