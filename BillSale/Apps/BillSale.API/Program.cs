@@ -1,13 +1,16 @@
 using BillSale.API.Automapper;
 using BillSale.API.Implementations;
+using BillSale.API.Infrastructure;
 using BillSale.BLL.Services;
 using BillSale.BLL.Services.Automapper;
 using BillSale.BLL.Services.Contracts;
+using BillSale.BLL.Services.Validators.Certificate;
 using BillSale.Common;
 using BillSale.DAL.Context;
 using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories;
 using BillSale.DAL.Repositories.Contracts;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +25,14 @@ builder.Services.AddScoped<ITransferCertificateRepository, TransferCertificateRe
 builder.Services.AddScoped<ICertificateProductItemRepository, TransferCertificateProductRepository>();
 
 builder.Services.AddScoped<ITransferCertificateService, TransferCertificateService>();
+
+builder.Services.AddScoped<IValidateService, ValidateService>();
+builder.Services.RegisterImplementationsOf<IValidator>(
+    typeof(CertificateCreateModelValidator).Assembly,
+    ServiceLifetime.Scoped);
+
 builder.Services.AddScoped<IDbWriterContext, DbWriterContext>();
+
 builder.Services.AddAutoMapper(x =>
 {
     x.AddProfile<ApiProfile>();

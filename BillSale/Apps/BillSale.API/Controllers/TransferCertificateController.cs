@@ -1,7 +1,9 @@
 using AutoMapper;
+using BillSale.API.Implementations;
 using BillSale.API.Models.Certificate;
 using BillSale.BLL.Services.Contracts;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
+using BillSale.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillSale.API.Controllers
@@ -15,14 +17,16 @@ namespace BillSale.API.Controllers
     {
         private readonly ITransferCertificateService certificateService;
         private readonly IMapper mapper;
+        private readonly IValidateService validateService;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public TransferCertificateController(ITransferCertificateService certificateService, IMapper mapper)
+        public TransferCertificateController(ITransferCertificateService certificateService, IMapper mapper, IValidateService validateService)
         {
             this.certificateService = certificateService;
             this.mapper = mapper;
+            this.validateService = validateService;
         }
 
         [HttpGet]
@@ -54,6 +58,7 @@ namespace BillSale.API.Controllers
         public async Task<IActionResult> Create([FromBody] CertificateCreateApiModel model, CancellationToken cancellationToken)
         {
             var mapped = mapper.Map<CertificateCreateModel>(model);
+            await validateService.ValidateAsync(mapped, cancellationToken);
 
             var result = await certificateService.AddCertificateAsync(mapped, cancellationToken);
             return Ok(mapper.Map<CertificateDetailsApiModel>(result));
@@ -64,6 +69,8 @@ namespace BillSale.API.Controllers
         public async Task<IActionResult> Update([FromBody] CertificateUpdateApiModel model, CancellationToken cancellationToken)
         {
             var mapped = mapper.Map<CertificateUpdateModel>(model);
+            await validateService.ValidateAsync(mapped, cancellationToken);
+
             await certificateService.UpdateCertificateAsync(mapped, cancellationToken);
             return NoContent();
         }

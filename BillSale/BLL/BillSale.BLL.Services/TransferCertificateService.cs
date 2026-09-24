@@ -1,5 +1,6 @@
 using AutoMapper;
 using BillSale.BLL.Services.Contracts;
+using BillSale.BLL.Services.Contracts.Exceptions;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
 using BillSale.BLL.Services.Contracts.Models.Product;
 using BillSale.DAL.Contracts.Repositories;
@@ -8,6 +9,7 @@ using BillSale.Entities;
 
 namespace BillSale.BLL.Services
 {
+    //TODO: Исключения когда ошибки поиска дочерних обьектов
     /// <summary>
     /// Сервис для работы с <see cref="TransferCertificate"/>
     /// </summary>
@@ -45,46 +47,44 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
             if (entity is null)
             {
-                // TODO: Заменить на кастомные
-                throw new Exception($"Такого сертификата нет id - {id}");
+                throw new EntityNotFoundException<TransferCertificate>(id);
             }
             return mapper.Map<CertificateModel>(entity);
-
         }
 
         /// <inheritdoc />
         public async Task<CertificateDetailModel> GetDetailCertificateByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var entity = await certificateRepository.GetCertificateDetailById(id, cancellationToken);
+            if (entity is null)
+            {
+                throw new EntityNotFoundException<TransferCertificate>(id);
+            }
             return mapper.Map<CertificateDetailModel>(entity);
         }
 
         /// <inheritdoc />
         public async Task UpdateCertificateAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken)
         {
-            // TODO: Сделать нормальное обновление для ProductItem
             var entity = await certificateRepository.GetCertificateDetailById(certificateModel.Id, cancellationToken);
             if (entity is null)
             {
-                // TODO: Заменить на кастомные
-                throw new Exception($"Такого сертификата нет id - {certificateModel.Id}");
+                throw new EntityNotFoundException<TransferCertificate>(certificateModel.Id);
             }
+
             var invalidProduct = certificateModel.Products
                 .FirstOrDefault(x =>
                     x.Id != Guid.Empty && !entity.ProductItems.Any(p => p.Id == x.Id));
 
             if (invalidProduct is not null)
             {
-                // TODO: Заменить на кастомные
-                throw new Exception($"Позиция продукта не существует и не может быть обновлена. Id: {invalidProduct.Id}");
+                throw new NotFoundException($"Позиция продукта не существует и не может быть обновлена. Id: {invalidProduct.Id}");
             }
 
             mapper.Map(certificateModel, entity);
 
             DeleteCertificateProductItems(certificateModel, entity);
-
             AddCertificateProductItems(certificateModel, entity);
-
             UpdateProductItems(certificateModel, entity);
 
             certificateRepository.Update(entity);
@@ -150,8 +150,7 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
             if (entity is null)
             {
-                // TODO: Заменить на кастомные
-                throw new Exception($"Невозможно удалить. Такого сертификата нет id - {id}");
+                throw new EntityNotFoundException<TransferCertificate>(id);
             }
 
             certificateRepository.Delete(entity);
