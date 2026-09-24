@@ -12,9 +12,9 @@ namespace BillSale.API.Controllers
     /// </summary>
     [ApiController]
     [Route("[controller]")]
-    public class TransferCertificateController : ControllerBase
+    public class CertificateController : ControllerBase
     {
-        private readonly ITransferCertificateService certificateService;
+        private readonly ICertificateService certificateService;
         private readonly IMapper mapper;
         private readonly IValidateService validateService;
 
@@ -24,7 +24,7 @@ namespace BillSale.API.Controllers
         /// <param name="certificateService">Сервис актов</param>
         /// <param name="mapper">Маппер для преобразования моделей</param>
         /// <param name="validateService">Сервис валидации</param>
-        public TransferCertificateController(ITransferCertificateService certificateService, IMapper mapper, IValidateService validateService)
+        public CertificateController(ICertificateService certificateService, IMapper mapper, IValidateService validateService)
         {
             this.certificateService = certificateService;
             this.mapper = mapper;

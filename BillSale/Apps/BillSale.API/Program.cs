@@ -21,10 +21,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddSingleton<IIdentityProvider, IdentityProvider>();
 
-builder.Services.AddScoped<ITransferCertificateRepository, TransferCertificateRepository>();
+builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<ICertificateProductItemRepository, TransferCertificateProductRepository>();
 
-builder.Services.AddScoped<ITransferCertificateService, TransferCertificateService>();
+builder.Services.AddScoped<ICertificateService, CertificateService>();
 
 builder.Services.AddScoped<IValidateService, ValidateService>();
 builder.Services.RegisterImplementationsOf<IValidator>(

@@ -9,11 +9,11 @@ using BillSale.Entities;
 namespace BillSale.BLL.Services
 {
     /// <summary>
-    /// Сервис для работы с <see cref="TransferCertificate"/>
+    /// Сервис для работы с <see cref="Certificate"/>
     /// </summary>
-    public class TransferCertificateService : ITransferCertificateService
+    public class CertificateService : ICertificateService
     {
-        private readonly ITransferCertificateRepository certificateRepository;
+        private readonly ICertificateRepository certificateRepository;
         private readonly ICertificateProductItemRepository productItemRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
@@ -24,7 +24,7 @@ namespace BillSale.BLL.Services
         /// <param name="certificateRepository">Репозиторий сущности</param>
         /// <param name="unitOfWork">Обьект еденицы работы</param>
         /// <param name="mapper">маппер</param>
-        public TransferCertificateService(ITransferCertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CertificateService(ICertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.certificateRepository = certificateRepository;
             this.unitOfWork = unitOfWork;
@@ -45,7 +45,7 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
             if (entity is null)
             {
-                throw new EntityNotFoundException<TransferCertificate>(id);
+                throw new EntityNotFoundException<Certificate>(id);
             }
             return mapper.Map<CertificateModel>(entity);
         }
@@ -56,7 +56,7 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateDetailById(id, cancellationToken);
             if (entity is null)
             {
-                throw new EntityNotFoundException<TransferCertificate>(id);
+                throw new EntityNotFoundException<Certificate>(id);
             }
             return mapper.Map<CertificateDetailModel>(entity);
         }
@@ -67,7 +67,7 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateDetailById(certificateModel.Id, cancellationToken);
             if (entity is null)
             {
-                throw new EntityNotFoundException<TransferCertificate>(certificateModel.Id);
+                throw new EntityNotFoundException<Certificate>(certificateModel.Id);
             }
 
             var invalidProduct = certificateModel.Products
@@ -90,7 +90,7 @@ namespace BillSale.BLL.Services
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        private void UpdateProductItems(CertificateUpdateModel certificateModel, TransferCertificate entity)
+        private void UpdateProductItems(CertificateUpdateModel certificateModel, Certificate entity)
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id != Guid.Empty))
             {
@@ -101,20 +101,20 @@ namespace BillSale.BLL.Services
             }
         }
 
-        private void AddCertificateProductItems(CertificateUpdateModel certificateModel, TransferCertificate entity)
+        private void AddCertificateProductItems(CertificateUpdateModel certificateModel, Certificate entity)
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id == Guid.Empty))
             {
-                var product = mapper.Map<TransferCertificateProduct>(productModel);
+                var product = mapper.Map<CertificateProduct>(productModel);
 
-                product.TransferCertificateId = entity.Id;
+                product.CertificateId = entity.Id;
 
                 productItemRepository.Add(product);
 
             }
         }
 
-        private void DeleteCertificateProductItems(CertificateUpdateModel certificateModel, TransferCertificate entity)
+        private void DeleteCertificateProductItems(CertificateUpdateModel certificateModel, Certificate entity)
         {
             foreach (var product in entity.ProductItems)
             {
@@ -128,13 +128,13 @@ namespace BillSale.BLL.Services
         /// <inheritdoc />
         public async Task<CertificateDetailModel> AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken)
         {
-            var entity = mapper.Map<TransferCertificate>(certificateModel);
+            var entity = mapper.Map<Certificate>(certificateModel);
 
             certificateRepository.Add(entity);
 
             foreach (var product in entity.ProductItems)
             {
-                product.TransferCertificateId = entity.Id;
+                product.CertificateId = entity.Id;
                 productItemRepository.Add(product);
             }
 
@@ -148,7 +148,7 @@ namespace BillSale.BLL.Services
             var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
             if (entity is null)
             {
-                throw new EntityNotFoundException<TransferCertificate>(id);
+                throw new EntityNotFoundException<Certificate>(id);
             }
 
             certificateRepository.Delete(entity);

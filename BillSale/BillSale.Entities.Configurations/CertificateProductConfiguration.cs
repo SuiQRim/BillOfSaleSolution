@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BillSale.Entities.Configurations
 {
     /// <summary>
-    /// Конфигурация сущности <see cref="TransferCertificateProductConfiguration"/> для Entity Framework Core
+    /// Конфигурация сущности <see cref="CertificateProductConfiguration"/> для Entity Framework Core
     /// </summary>
-    internal class TransferCertificateProductConfiguration : IEntityTypeConfiguration<TransferCertificateProduct>
+    internal class CertificateProductConfiguration : IEntityTypeConfiguration<CertificateProduct>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<TransferCertificateProduct> builder)
+        public void Configure(EntityTypeBuilder<CertificateProduct> builder)
         {
-            builder.ToTable("TransferCertificateProduct");
+            builder.ToTable("CertificateProduct");
             builder.HasIdAsKey();
             builder.CreateAuditConfiguration();
             builder.UpdateAuditConfiguration();

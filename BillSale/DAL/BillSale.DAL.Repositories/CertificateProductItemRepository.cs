@@ -4,10 +4,10 @@ using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 
 /// <summary>
-/// Репозиторий для работы с сущностью <see cref="TransferCertificateProduct"/>
+/// Репозиторий для работы с сущностью <see cref="CertificateProduct"/>
 /// </summary>
 public class TransferCertificateProductRepository
-    : BaseWriteRepository<TransferCertificateProduct>,
+    : BaseWriteRepository<CertificateProduct>,
       ICertificateProductItemRepository
 {
     /// <summary>

@@ -5,7 +5,7 @@ namespace BillSale.BLL.Services.Contracts
     /// <summary>
     /// Контракт сервиса сущности акта
     /// </summary>
-    public interface ITransferCertificateService
+    public interface ICertificateService
     {
         /// <summary>
         /// Получение списка актов

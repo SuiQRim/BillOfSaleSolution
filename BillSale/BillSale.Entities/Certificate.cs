@@ -5,13 +5,13 @@ namespace BillSale.Entities
     /// <summary>
     /// Акт приема-передачи
     /// </summary>
-    public class TransferCertificate : BaseAuditEntity
+    public class Certificate : BaseAuditEntity
     {
         public int ArticulNumber { get; set; }
         /// <summary>
         /// Список продуктов
         /// </summary>
-        public ICollection<TransferCertificateProduct> ProductItems { get; } = [];
+        public ICollection<CertificateProduct> ProductItems { get; } = [];
 
         /// <summary>
         /// Идентификатор продовца

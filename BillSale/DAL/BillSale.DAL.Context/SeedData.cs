@@ -374,8 +374,8 @@ namespace BillSale.Context
             Guid company5Id,
             Guid company6Id)
         {
-            modelBuilder.Entity<TransferCertificate>().HasData(
-                new TransferCertificate
+            modelBuilder.Entity<Certificate>().HasData(
+                new Certificate
                 {
                     Id = certificate1Id,
                     ArticulNumber = 1001,
@@ -390,7 +390,7 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificate
+                new Certificate
                 {
                     Id = certificate2Id,
                     ArticulNumber = 1002,
@@ -405,7 +405,7 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificate
+                new Certificate
                 {
                     Id = certificate3Id,
                     ArticulNumber = 1003,
@@ -420,7 +420,7 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificate
+                new Certificate
                 {
                     Id = certificate4Id,
                     ArticulNumber = 1004,
@@ -435,7 +435,7 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificate
+                new Certificate
                 {
                     Id = certificate5Id,
                     ArticulNumber = 1005,
@@ -486,11 +486,11 @@ namespace BillSale.Context
             Guid product9Id,
             Guid product10Id)
         {
-            modelBuilder.Entity<TransferCertificateProduct>().HasData(
-                new TransferCertificateProduct
+            modelBuilder.Entity<CertificateProduct>().HasData(
+                new CertificateProduct
                 {
                     Id = item1Id,
-                    TransferCertificateId = certificate1Id,
+                    CertificateId = certificate1Id,
                     ProductId = product1Id,
                     Count = 5,
                     Price = 85000m,
@@ -500,10 +500,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item2Id,
-                    TransferCertificateId = certificate1Id,
+                    CertificateId = certificate1Id,
                     ProductId = product2Id,
                     Count = 5,
                     Price = 32000m,
@@ -513,10 +513,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item3Id,
-                    TransferCertificateId = certificate1Id,
+                    CertificateId = certificate1Id,
                     ProductId = product3Id,
                     Count = 5,
                     Price = 7500m,
@@ -526,10 +526,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item4Id,
-                    TransferCertificateId = certificate2Id,
+                    CertificateId = certificate2Id,
                     ProductId = product4Id,
                     Count = 10,
                     Price = 6500m,
@@ -539,10 +539,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item5Id,
-                    TransferCertificateId = certificate2Id,
+                    CertificateId = certificate2Id,
                     ProductId = product5Id,
                     Count = 20,
                     Price = 1200m,
@@ -552,10 +552,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item6Id,
-                    TransferCertificateId = certificate2Id,
+                    CertificateId = certificate2Id,
                     ProductId = product6Id,
                     Count = 4,
                     Price = 14500m,
@@ -565,10 +565,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item7Id,
-                    TransferCertificateId = certificate2Id,
+                    CertificateId = certificate2Id,
                     ProductId = product9Id,
                     Count = 30,
                     Price = 650m,
@@ -578,10 +578,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item8Id,
-                    TransferCertificateId = certificate3Id,
+                    CertificateId = certificate3Id,
                     ProductId = product7Id,
                     Count = 12,
                     Price = 18500m,
@@ -591,10 +591,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item9Id,
-                    TransferCertificateId = certificate3Id,
+                    CertificateId = certificate3Id,
                     ProductId = product8Id,
                     Count = 8,
                     Price = 22000m,
@@ -604,10 +604,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item10Id,
-                    TransferCertificateId = certificate3Id,
+                    CertificateId = certificate3Id,
                     ProductId = product10Id,
                     Count = 6,
                     Price = 9800m,
@@ -617,10 +617,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item11Id,
-                    TransferCertificateId = certificate4Id,
+                    CertificateId = certificate4Id,
                     ProductId = product1Id,
                     Count = 2,
                     Price = 83000m,
@@ -630,10 +630,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item12Id,
-                    TransferCertificateId = certificate4Id,
+                    CertificateId = certificate4Id,
                     ProductId = product6Id,
                     Count = 2,
                     Price = 14000m,
@@ -643,10 +643,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item13Id,
-                    TransferCertificateId = certificate4Id,
+                    CertificateId = certificate4Id,
                     ProductId = product4Id,
                     Count = 3,
                     Price = 6200m,
@@ -656,10 +656,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item14Id,
-                    TransferCertificateId = certificate5Id,
+                    CertificateId = certificate5Id,
                     ProductId = product2Id,
                     Count = 3,
                     Price = 31500m,
@@ -669,10 +669,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item15Id,
-                    TransferCertificateId = certificate5Id,
+                    CertificateId = certificate5Id,
                     ProductId = product3Id,
                     Count = 3,
                     Price = 7200m,
@@ -682,10 +682,10 @@ namespace BillSale.Context
                     UpdatedBy = UpdatedBy,
                     DeletedAt = null
                 },
-                new TransferCertificateProduct
+                new CertificateProduct
                 {
                     Id = item16Id,
-                    TransferCertificateId = certificate5Id,
+                    CertificateId = certificate5Id,
                     ProductId = product9Id,
                     Count = 50,
                     Price = 620m,
