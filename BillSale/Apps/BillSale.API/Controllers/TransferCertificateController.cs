@@ -21,6 +21,9 @@ namespace BillSale.API.Controllers
         /// <summary>
         /// ctor
         /// </summary>
+        /// <param name="certificateService">Сервис актов</param>
+        /// <param name="mapper">Маппер для преобразования моделей</param>
+        /// <param name="validateService">Сервис валидации</param>
         public TransferCertificateController(ITransferCertificateService certificateService, IMapper mapper, IValidateService validateService)
         {
             this.certificateService = certificateService;
@@ -28,6 +31,11 @@ namespace BillSale.API.Controllers
             this.validateService = validateService;
         }
 
+        /// <summary>
+        /// Получить список всех актов
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<CertificateApiModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
@@ -36,6 +44,12 @@ namespace BillSale.API.Controllers
             return Ok(mapper.Map<IReadOnlyCollection<CertificateApiModel>>(certificates));
         }
 
+        /// <summary>
+        /// Получить сертификат по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Список актов</returns>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(CertificateApiModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,6 +59,12 @@ namespace BillSale.API.Controllers
             return Ok(mapper.Map<CertificateApiModel>(certificates));
         }
 
+        /// <summary>
+        /// Получить детальную информацию об акте
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Детальный акт</returns>
         [HttpGet("details/{id:guid}")]
         [ProducesResponseType(typeof(CertificateDetailsApiModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,6 +74,12 @@ namespace BillSale.API.Controllers
             return Ok(mapper.Map<CertificateDetailsApiModel>(certificates));
         }
 
+        /// <summary>
+        /// Создать акт
+        /// </summary>
+        /// <param name="model">Форма акта</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Созданный акт</returns>
         [HttpPost]
         [ProducesResponseType(typeof(CertificateDetailsApiModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -66,6 +92,11 @@ namespace BillSale.API.Controllers
             return Ok(mapper.Map<CertificateDetailsApiModel>(result));
         }
 
+        /// <summary>
+        /// Обновить акт
+        /// </summary>
+        /// <param name="model">Форма акта</param>
+        /// <param name="cancellationToken"></param>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -78,6 +109,12 @@ namespace BillSale.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Удалить акт по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

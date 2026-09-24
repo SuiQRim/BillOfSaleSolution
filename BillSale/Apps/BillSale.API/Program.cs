@@ -39,18 +39,21 @@ builder.Services.AddAutoMapper(x =>
     x.AddProfile<ServiceProfile>();
 });
 
-//TODO: Вынести в Appsettings
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BillSaleContext>(opts =>
-    opts.UseNpgsql("Host=localhost;Port=5432;Database=BillSale;Username=postgres;Password=12345"));
+    opts.UseNpgsql(connectionString));
 builder.Services.AddScoped<IUnitOfWork>(x => x.GetRequiredService<BillSaleContext>());
 builder.Services.AddScoped<IReader>(x => x.GetRequiredService<BillSaleContext>());
 builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<BillSaleContext>());
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
 builder.Services.AddControllers(opts => opts.Filters.Add<ExceptionFilter>());
+
 builder.Services.AddHealthChecks();
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,11 +63,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapHealthChecks("health");
+
 app.MapControllers();
 
 app.Run();
