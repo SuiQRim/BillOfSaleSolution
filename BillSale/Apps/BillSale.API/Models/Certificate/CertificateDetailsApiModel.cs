@@ -1,12 +1,12 @@
-using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
-using BillSale.BLL.Services.Contracts.Models.Company;
+using BillSale.API.Models.Certificate.ProductItem;
+using BillSale.API.Models.Company;
 
-namespace BillSale.BLL.Services.Contracts.Models.Certificate
+namespace BillSale.API.Models.Certificate
 {
     /// <summary>
     /// Модель детальной информации об акте
     /// </summary>
-    public class CertificateDetailModel
+    public class CertificateDetailsApiModel
     {
         /// <summary>
         /// Идентификатор
@@ -16,12 +16,12 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         /// <summary>
         /// Продавец
         /// </summary>
-        public CompanyModel Seller { get; set; } = null!;
+        public CompanyDetailsApiModel Seller { get; set; } = null!;
 
         /// <summary>
         /// Покупатель
         /// </summary>
-        public CompanyModel Purchaser { get; set; } = null!;
+        public CompanyDetailsApiModel Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город
@@ -36,6 +36,6 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         /// <summary>
         /// Продукты в акте
         /// </summary>
-        public IReadOnlyCollection<CertificateProductDetailsModel> Products { get; set; } = [];
+        public IReadOnlyCollection<CertificateProductDetailsApiModel> Products { get; set; } = [];
     }
 }

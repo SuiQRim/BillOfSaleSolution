@@ -1,0 +1,8 @@
+namespace BillSale.BLL.Services.Contracts.Exceptions
+{
+    /// <summary>
+    /// Исключение объект не найден
+    /// </summary>
+    /// <param name="message">Сообщение</param>
+    public class NotFoundException(string message) : BillSaleException(message);
+}

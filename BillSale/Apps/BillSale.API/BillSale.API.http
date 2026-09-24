@@ -1,0 +1,6 @@
+@BillSale.API_HostAddress = http://localhost:5199
+
+GET {{BillSale.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

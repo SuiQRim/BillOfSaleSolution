@@ -1,4 +1,4 @@
-using BillSale.BLL.Services.Contracts.Models.Certificate.Product;
+using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
 
 namespace BillSale.BLL.Services.Contracts.Models.Certificate
 {
@@ -30,6 +30,6 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         /// <summary>
         /// Продукты в акте
         /// </summary>
-        public ICollection<CertificateProductUpdateModel> Products { get; set; } = [];
+        public IReadOnlyCollection<CertificateProductUpdateModel> Products { get; set; } = [];
     }
 }

@@ -1,14 +1,12 @@
-using BillSale.DAL.Contracts;
-
-namespace BillSale.Entities
+namespace BillSale.API.Models.Company
 {
     /// <summary>
-    /// Компания
+    /// Модель создания компании
     /// </summary>
-    public class Company : BaseAuditEntity
+    public class CompanyCreateApiModel
     {
         /// <summary>
-        /// Название организации
+        /// Наименование организации
         /// </summary>
         public string OrganizationName { get; set; } = string.Empty;
 
@@ -23,7 +21,7 @@ namespace BillSale.Entities
         public string FirstName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Фамилие
+        /// Фамилия
         /// </summary>
         public string LastName { get; set; } = string.Empty;
 
@@ -33,7 +31,7 @@ namespace BillSale.Entities
         public string MiddleName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Название подтверждающего документа
+        /// Наименование документа
         /// </summary>
         public string DocumentName { get; set; } = string.Empty;
     }

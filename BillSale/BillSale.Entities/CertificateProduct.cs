@@ -5,12 +5,12 @@ namespace BillSale.Entities
     /// <summary>
     /// Продукт в акте
     /// </summary>
-    public class TransferCertificateProduct : BaseAuditEntity
+    public class CertificateProduct : BaseAuditEntity
     {
         /// <summary>
         /// Идентификатор акта
         /// </summary>
-        public Guid TransferCertificateId { get; set; }
+        public Guid CertificateId { get; set; }
 
         /// <summary>
         /// Идентификатор продукта

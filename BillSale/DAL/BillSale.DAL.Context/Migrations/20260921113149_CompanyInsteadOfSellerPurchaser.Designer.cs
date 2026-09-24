@@ -3,6 +3,7 @@ using System;
 using BillSale.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BillSale.DAL.Context.Migrations
 {
     [DbContext(typeof(BillSaleContext))]
-    partial class BillSaleContextModelSnapshot : ModelSnapshot
+    [Migration("20260921113149_CompanyInsteadOfSellerPurchaser")]
+    partial class CompanyInsteadOfSellerPurchaser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,365 +24,6 @@ namespace BillSale.DAL.Context.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("BillSale.Entities.Certificate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ArticulNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("PreparationDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("PurchaserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SellerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurchaserId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("Certificates", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000001"),
-                            ArticulNumber = 1001,
-                            City = "Санкт-Петербург",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            PreparationDate = new DateTimeOffset(new DateTime(2026, 1, 15, 11, 30, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000001"),
-                            SellerId = new Guid("10000000-0000-0000-0000-000000000001"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000002"),
-                            ArticulNumber = 1002,
-                            City = "Москва",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            PreparationDate = new DateTimeOffset(new DateTime(2026, 2, 3, 14, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000002"),
-                            SellerId = new Guid("10000000-0000-0000-0000-000000000002"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000003"),
-                            ArticulNumber = 1003,
-                            City = "Псков",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            PreparationDate = new DateTimeOffset(new DateTime(2026, 3, 20, 10, 15, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000001"),
-                            SellerId = new Guid("10000000-0000-0000-0000-000000000003"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000004"),
-                            ArticulNumber = 1004,
-                            City = "Великий Новгород",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            PreparationDate = new DateTimeOffset(new DateTime(2026, 4, 8, 13, 45, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000003"),
-                            SellerId = new Guid("10000000-0000-0000-0000-000000000001"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000005"),
-                            ArticulNumber = 1005,
-                            City = "Тверь",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            PreparationDate = new DateTimeOffset(new DateTime(2026, 5, 12, 16, 20, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000003"),
-                            SellerId = new Guid("10000000-0000-0000-0000-000000000002"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        });
-                });
-
-            modelBuilder.Entity("BillSale.Entities.CertificateProduct", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CertificateId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CertificateId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CertificateProduct", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000001"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
-                            Count = 5,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 85000m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000001"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000002"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
-                            Count = 5,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 32000m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000002"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000003"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
-                            Count = 5,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 7500m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000003"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000004"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
-                            Count = 10,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 6500m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000004"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000005"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
-                            Count = 20,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 1200m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000005"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000006"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
-                            Count = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 14500m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000006"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000007"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
-                            Count = 30,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 650m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000009"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000008"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
-                            Count = 12,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 18500m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000007"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000009"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
-                            Count = 8,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 22000m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000008"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000010"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
-                            Count = 6,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 9800m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000010"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000011"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
-                            Count = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 83000m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000001"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000012"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
-                            Count = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 14000m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000006"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000013"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
-                            Count = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 6200m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000004"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000014"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
-                            Count = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 31500m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000002"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000015"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
-                            Count = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 7200m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000003"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("50000000-0000-0000-0000-000000000016"),
-                            CertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
-                            Count = 50,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CreatedBy = "Admin",
-                            Price = 620m,
-                            ProductId = new Guid("30000000-0000-0000-0000-000000000009"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UpdatedBy = "Admin"
-                        });
-                });
 
             modelBuilder.Entity("BillSale.Entities.Company", b =>
                 {
@@ -669,7 +313,366 @@ namespace BillSale.DAL.Context.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BillSale.Entities.Certificate", b =>
+            modelBuilder.Entity("BillSale.Entities.TransferCertificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ArticulNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("PreparationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PurchaserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SellerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaserId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("TransferCertificates", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000001"),
+                            ArticulNumber = 1001,
+                            City = "Санкт-Петербург",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            PreparationDate = new DateTimeOffset(new DateTime(2026, 1, 15, 11, 30, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            SellerId = new Guid("10000000-0000-0000-0000-000000000001"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000002"),
+                            ArticulNumber = 1002,
+                            City = "Москва",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            PreparationDate = new DateTimeOffset(new DateTime(2026, 2, 3, 14, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000002"),
+                            SellerId = new Guid("10000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000003"),
+                            ArticulNumber = 1003,
+                            City = "Псков",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            PreparationDate = new DateTimeOffset(new DateTime(2026, 3, 20, 10, 15, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000001"),
+                            SellerId = new Guid("10000000-0000-0000-0000-000000000003"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000004"),
+                            ArticulNumber = 1004,
+                            City = "Великий Новгород",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            PreparationDate = new DateTimeOffset(new DateTime(2026, 4, 8, 13, 45, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000003"),
+                            SellerId = new Guid("10000000-0000-0000-0000-000000000001"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("40000000-0000-0000-0000-000000000005"),
+                            ArticulNumber = 1005,
+                            City = "Тверь",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            PreparationDate = new DateTimeOffset(new DateTime(2026, 5, 12, 16, 20, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            PurchaserId = new Guid("20000000-0000-0000-0000-000000000003"),
+                            SellerId = new Guid("10000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("BillSale.Entities.TransferCertificateProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TransferCertificateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TransferCertificateId");
+
+                    b.ToTable("TransferCertificateProduct", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000001"),
+                            Count = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 85000m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000001"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000002"),
+                            Count = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 32000m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000002"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000003"),
+                            Count = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 7500m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000003"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000001"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000004"),
+                            Count = 10,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 6500m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000004"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000005"),
+                            Count = 20,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 1200m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000005"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000006"),
+                            Count = 4,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 14500m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000006"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000007"),
+                            Count = 30,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 650m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000009"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000002"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000008"),
+                            Count = 12,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 18500m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000007"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000009"),
+                            Count = 8,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 22000m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000008"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000010"),
+                            Count = 6,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 9800m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000010"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000003"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000011"),
+                            Count = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 83000m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000001"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000012"),
+                            Count = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 14000m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000006"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000013"),
+                            Count = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 6200m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000004"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000004"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000014"),
+                            Count = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 31500m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000002"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000015"),
+                            Count = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 7200m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000003"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("50000000-0000-0000-0000-000000000016"),
+                            Count = 50,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = "Admin",
+                            Price = 620m,
+                            ProductId = new Guid("30000000-0000-0000-0000-000000000009"),
+                            TransferCertificateId = new Guid("40000000-0000-0000-0000-000000000005"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedBy = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("BillSale.Entities.TransferCertificate", b =>
                 {
                     b.HasOne("BillSale.Entities.Company", "Purchaser")
                         .WithMany()
@@ -688,24 +691,24 @@ namespace BillSale.DAL.Context.Migrations
                     b.Navigation("Seller");
                 });
 
-            modelBuilder.Entity("BillSale.Entities.CertificateProduct", b =>
+            modelBuilder.Entity("BillSale.Entities.TransferCertificateProduct", b =>
                 {
-                    b.HasOne("BillSale.Entities.Certificate", null)
-                        .WithMany("ProductItems")
-                        .HasForeignKey("CertificateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BillSale.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BillSale.Entities.TransferCertificate", null)
+                        .WithMany("ProductItems")
+                        .HasForeignKey("TransferCertificateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BillSale.Entities.Certificate", b =>
+            modelBuilder.Entity("BillSale.Entities.TransferCertificate", b =>
                 {
                     b.Navigation("ProductItems");
                 });

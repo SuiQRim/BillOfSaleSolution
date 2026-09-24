@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Apps/">
+    <Project Path="Apps/BillSale.API/BillSale.API.csproj" Id="4b063c1e-6545-4076-9746-19b68fd519f9" />
+  </Folder>
   <Folder Name="/BLL/">
     <Project Path="BillSale.BLL.Services.Contracts/BillSale.BLL.Services.Contracts.csproj" Id="7a2413ca-c573-4354-ac37-aa7d7ede35c2" />
     <Project Path="BLL/BillSale.BLL.Services/BillSale.BLL.Services.csproj" Id="5e9ea5a3-0395-42c4-a394-2364a97691d9" />

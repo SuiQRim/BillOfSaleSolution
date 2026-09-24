@@ -4,9 +4,9 @@ using BillSale.DAL.Contracts.Repositories;
 namespace BillSale.DAL.Context.Repositories
 {
     /// <summary>
-    /// 
+    /// Базовый репозиторий для операций записи в базу данных
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Тип сущности</typeparam>
     public class BaseWriteRepository<T> : IBaseWriteRepository<T>
         where T : class, IEntity
     {

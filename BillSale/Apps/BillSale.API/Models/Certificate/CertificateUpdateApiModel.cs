@@ -1,12 +1,17 @@
-using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
+using BillSale.API.Models.Certificate.ProductItem;
 
-namespace BillSale.BLL.Services.Contracts.Models.Certificate
+namespace BillSale.API.Models.Certificate
 {
     /// <summary>
-    /// Модель создания акта
+    /// Модель обновления акта
     /// </summary>
-    public class CertificateCreateModel
+    public class CertificateUpdateApiModel
     {
+        /// <summary>
+        /// Идетнификатор
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Идентификатор продавца
         /// </summary>
@@ -25,6 +30,6 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         /// <summary>
         /// Продукты в акте
         /// </summary>
-        public ICollection<CertificateProductCreateModel> Products { get; set; } = [];
+        public IReadOnlyCollection<CertificateProductUpdateApiModel> Products { get; set; } = [];
     }
 }

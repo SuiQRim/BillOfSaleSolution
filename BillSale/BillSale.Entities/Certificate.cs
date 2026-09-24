@@ -5,12 +5,17 @@ namespace BillSale.Entities
     /// <summary>
     /// Акт приема-передачи
     /// </summary>
-    public class TransferCertificate : BaseAuditEntity
+    public class Certificate : BaseAuditEntity
     {
+        /// <summary>
+        /// Артикул
+        /// </summary>
+        public int ArticulNumber { get; set; }
+
         /// <summary>
         /// Список продуктов
         /// </summary>
-        public ICollection<TransferCertificateProduct> ProductItems { get; } = [];
+        public ICollection<CertificateProduct> ProductItems { get; } = [];
 
         /// <summary>
         /// Идентификатор продовца
@@ -20,7 +25,7 @@ namespace BillSale.Entities
         /// <summary> 
         /// Продовец
         /// </summary>
-        public Seller Seller { get; set; } = null!;
+        public Company Seller { get; set; } = null!;
 
         /// <summary>
         /// Идентификатор покупателя
@@ -30,7 +35,7 @@ namespace BillSale.Entities
         /// <summary>
         /// Покупатель
         /// </summary>
-        public Purchaser Purchaser { get; set; } = null!;
+        public Company Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город составления документа

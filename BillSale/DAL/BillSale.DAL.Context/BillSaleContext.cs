@@ -1,3 +1,4 @@
+using BillSale.Context;
 using BillSale.DAL.Contracts.Repositories;
 using BillSale.Entities.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace BillSale.DAL.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IEntitiesAnchor).Assembly);
+            SeedData.Seed(modelBuilder);
         }
 
         IQueryable<TEntity> IReader.Read<TEntity>()

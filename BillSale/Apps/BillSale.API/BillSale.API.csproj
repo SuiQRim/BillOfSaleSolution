@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BillSale.BLL.Services.Contracts\BillSale.BLL.Services.Contracts.csproj" />
+    <ProjectReference Include="..\..\BLL\BillSale.BLL.Services\BillSale.BLL.Services.csproj" />
+    <ProjectReference Include="..\..\DAL\BillSale.DAL.Context\BillSale.DAL.Context.csproj" />
+    <ProjectReference Include="..\..\DAL\BillSale.DAL.Repositories.Contracts\BillSale.DAL.Repositories.Contracts.csproj" />
+    <ProjectReference Include="..\..\DAL\BillSale.DAL.Repositories\BillSale.DAL.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

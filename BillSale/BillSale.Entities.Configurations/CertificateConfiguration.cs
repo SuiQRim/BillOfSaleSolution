@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BillSale.Entities.Configurations
 {
     /// <summary>
-    /// Конфигурация сущности <see cref="TransferCertificate"/> для Entity Framework Core
+    /// Конфигурация сущности <see cref="Certificate"/> для Entity Framework Core
     /// </summary>
-    internal class TransferCertificateConfiguration : IEntityTypeConfiguration<TransferCertificate>
+    internal class CertificateConfiguration : IEntityTypeConfiguration<Certificate>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<TransferCertificate> builder)
+        public void Configure(EntityTypeBuilder<Certificate> builder)
         {
-            builder.ToTable("TransferCertificates");
+            builder.ToTable("Certificates");
             builder.HasIdAsKey();
             builder.CreateAuditConfiguration();
             builder.UpdateAuditConfiguration();
@@ -34,7 +34,7 @@ namespace BillSale.Entities.Configurations
 
             builder.HasMany(x => x.ProductItems)
                 .WithOne()
-                .HasForeignKey(x => x.TransferCertificateId)
+                .HasForeignKey(x => x.CertificateId)
                 .IsRequired();
         }
     }

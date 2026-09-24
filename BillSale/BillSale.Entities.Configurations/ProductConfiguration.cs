@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BillSale.Entities.Configurations
 {
     /// <summary>
-    /// Конфигурация сущности <see cref="TransferCertificate"/> для Entity Framework Core
+    /// Конфигурация сущности <see cref="Certificate"/> для Entity Framework Core
     /// </summary>
     internal class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
