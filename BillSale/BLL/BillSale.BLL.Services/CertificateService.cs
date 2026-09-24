@@ -15,6 +15,8 @@ namespace BillSale.BLL.Services
     {
         private readonly ICertificateRepository certificateRepository;
         private readonly ICertificateProductItemRepository productItemRepository;
+        private readonly IProductRepository productRepository;
+        private readonly ICompanyRepository companyRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
@@ -24,12 +26,16 @@ namespace BillSale.BLL.Services
         /// <param name="certificateRepository">Репозиторий сущности</param>
         /// <param name="unitOfWork">Обьект еденицы работы</param>
         /// <param name="mapper">маппер</param>
-        public CertificateService(ICertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CertificateService(ICertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository,
+            IProductRepository productRepository, ICompanyRepository companyRepository,
+            IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.certificateRepository = certificateRepository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.productItemRepository = productItemRepository;
+            this.companyRepository = companyRepository;
+            this.productRepository = productRepository;
         }
 
         /// <inheritdoc />
@@ -64,11 +70,28 @@ namespace BillSale.BLL.Services
         /// <inheritdoc />
         public async Task UpdateCertificateAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken)
         {
+            var entity = await UpdateExistAsync(certificateModel, cancellationToken);
+
+            mapper.Map(certificateModel, entity);
+
+            DeleteCertificateProductItems(certificateModel, entity);
+            await AddCertificateProductItems(certificateModel, entity, cancellationToken);
+            await UpdateProductItems(certificateModel, entity, cancellationToken);
+
+            certificateRepository.Update(entity);
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        private async Task<Certificate> UpdateExistAsync(CertificateUpdateModel certificateModel, CancellationToken cancellationToken)
+        {
             var entity = await certificateRepository.GetCertificateDetailById(certificateModel.Id, cancellationToken);
             if (entity is null)
             {
                 throw new EntityNotFoundException<Certificate>(certificateModel.Id);
             }
+
+            await CompanyExistAsync(certificateModel.SellerId, certificateModel.PurchaserId, cancellationToken);
 
             var invalidProduct = certificateModel.Products
                 .FirstOrDefault(x =>
@@ -79,37 +102,56 @@ namespace BillSale.BLL.Services
                 throw new NotFoundException($"Позиция продукта не существует и не может быть обновлена. Id: {invalidProduct.Id}");
             }
 
-            mapper.Map(certificateModel, entity);
-
-            DeleteCertificateProductItems(certificateModel, entity);
-            AddCertificateProductItems(certificateModel, entity);
-            UpdateProductItems(certificateModel, entity);
-
-            certificateRepository.Update(entity);
-
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return entity;
         }
 
-        private void UpdateProductItems(CertificateUpdateModel certificateModel, Certificate entity)
+        private async Task CompanyExistAsync(Guid sellerId, Guid purchaserId, CancellationToken cancellationToken)
         {
-            foreach (var productModel in certificateModel.Products.Where(x => x.Id != Guid.Empty))
+            var seller = await companyRepository.GetCompanyById(sellerId, cancellationToken);
+            if (seller is null)
             {
-                var product = entity.ProductItems.First(x => x.Id == productModel.Id);
+                throw new EntityNotFoundException<Company>(sellerId);
+            }
 
-                mapper.Map(productModel, product);
-                productItemRepository.Update(product);
+            var purchaser = await companyRepository.GetCompanyById(purchaserId, cancellationToken);
+            if (purchaser is null)
+            {
+                throw new EntityNotFoundException<Company>(purchaserId);
             }
         }
 
-        private void AddCertificateProductItems(CertificateUpdateModel certificateModel, Certificate entity)
+        private async Task UpdateProductItems(CertificateUpdateModel certificateModel, Certificate entity, CancellationToken cancellationToken)
+        {
+            foreach (var productModel in certificateModel.Products.Where(x => x.Id != Guid.Empty))
+            {
+                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                if (product is null)
+                {
+                    throw new EntityNotFoundException<Product>(productModel.ProductId);
+                }
+
+                var productItem = entity.ProductItems.First(x => x.Id == productModel.Id);
+
+                mapper.Map(productModel, productItem);
+                productItemRepository.Update(productItem);
+            }
+        }
+
+        private async Task AddCertificateProductItems(CertificateUpdateModel certificateModel, Certificate entity, CancellationToken cancellationToken)
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id == Guid.Empty))
             {
-                var product = mapper.Map<CertificateProduct>(productModel);
+                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                if (product is null)
+                {
+                    throw new EntityNotFoundException<Product>(productModel.ProductId);
+                }
 
-                product.CertificateId = entity.Id;
+                var productItem = mapper.Map<CertificateProduct>(productModel);
 
-                productItemRepository.Add(product);
+                productItem.CertificateId = entity.Id;
+
+                productItemRepository.Add(productItem);
 
             }
         }
@@ -128,14 +170,21 @@ namespace BillSale.BLL.Services
         /// <inheritdoc />
         public async Task<CertificateDetailModel> AddCertificateAsync(CertificateCreateModel certificateModel, CancellationToken cancellationToken)
         {
+            await CompanyExistAsync(certificateModel.SellerId, certificateModel.PurchaserId, cancellationToken);
             var entity = mapper.Map<Certificate>(certificateModel);
 
             certificateRepository.Add(entity);
 
-            foreach (var product in entity.ProductItems)
+            foreach (var productModel in entity.ProductItems)
             {
-                product.CertificateId = entity.Id;
-                productItemRepository.Add(product);
+                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                if (product is null)
+                {
+                    throw new EntityNotFoundException<Product>(productModel.ProductId);
+                }
+
+                productModel.CertificateId = entity.Id;
+                productItemRepository.Add(productModel);
             }
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

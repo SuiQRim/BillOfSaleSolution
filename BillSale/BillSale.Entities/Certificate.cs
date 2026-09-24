@@ -7,7 +7,11 @@ namespace BillSale.Entities
     /// </summary>
     public class Certificate : BaseAuditEntity
     {
+        /// <summary>
+        /// Артикул
+        /// </summary>
         public int ArticulNumber { get; set; }
+
         /// <summary>
         /// Список продуктов
         /// </summary>
