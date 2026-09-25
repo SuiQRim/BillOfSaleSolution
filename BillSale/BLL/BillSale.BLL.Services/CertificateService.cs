@@ -107,13 +107,13 @@ namespace BillSale.BLL.Services
 
         private async Task CompanyExistAsync(Guid sellerId, Guid purchaserId, CancellationToken cancellationToken)
         {
-            var seller = await companyRepository.GetCompanyById(sellerId, cancellationToken);
+            var seller = await companyRepository.GetCompanyByIdAsync(sellerId, cancellationToken);
             if (seller is null)
             {
                 throw new EntityNotFoundException<Company>(sellerId);
             }
 
-            var purchaser = await companyRepository.GetCompanyById(purchaserId, cancellationToken);
+            var purchaser = await companyRepository.GetCompanyByIdAsync(purchaserId, cancellationToken);
             if (purchaser is null)
             {
                 throw new EntityNotFoundException<Company>(purchaserId);

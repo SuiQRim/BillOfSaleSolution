@@ -29,7 +29,7 @@ namespace BillSale.DAL.Repositories
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public async Task<Company?> GetCompanyById(Guid id, CancellationToken cancellationToken)
+        public async Task<Company?> GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken)
             => await reader.Read<Company>()
                 .NotDeletedAt()
                 .ById(id)
