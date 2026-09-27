@@ -27,6 +27,8 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICertificateProductItemRepository, TransferCertificateProductRepository>();
 
 builder.Services.AddScoped<ICertificateService, CertificateService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 builder.Services.AddScoped<IValidateService, ValidateService>();
 builder.Services.RegisterImplementationsOf<IValidator>(

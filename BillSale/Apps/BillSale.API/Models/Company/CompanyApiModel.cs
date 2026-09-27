@@ -3,7 +3,7 @@ namespace BillSale.API.Models.Company
     /// <summary>
     /// Модель компании
     /// </summary>
-    public class CompanyDetailsApiModel : CompanyCreateApiModel
+    public class CompanyApiModel : CompanyCreateApiModel
     {
         /// <summary>
         /// Идентификатор

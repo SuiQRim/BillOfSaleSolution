@@ -127,7 +127,7 @@ namespace BillSale.BLL.Services
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id != Guid.Empty))
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);
@@ -144,7 +144,7 @@ namespace BillSale.BLL.Services
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id == Guid.Empty))
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);
@@ -180,7 +180,7 @@ namespace BillSale.BLL.Services
 
             foreach (var productModel in entity.ProductItems)
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);
