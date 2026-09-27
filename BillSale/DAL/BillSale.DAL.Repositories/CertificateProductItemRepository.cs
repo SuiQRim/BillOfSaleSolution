@@ -3,20 +3,19 @@ using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 
-/// <summary>
-/// Репозиторий для работы с сущностью <see cref="CertificateProduct"/>
-/// </summary>
-public class TransferCertificateProductRepository
-    : BaseWriteRepository<CertificateProduct>,
-      ICertificateProductItemRepository
+namespace BillSale.DAL.Repositories
 {
     /// <summary>
-    /// ctor
+    /// Репозиторий для работы с сущностью <see cref="CertificateProduct"/>
     /// </summary>
+    /// <remarks>
+    /// ctor
+    /// </remarks>
     /// <param name="writerContext">писатель</param>
-    public TransferCertificateProductRepository(
+    public class CertificateProductItemRepository(
         IDbWriterContext writerContext)
-        : base(writerContext)
+        : BaseWriteRepository<CertificateProduct>(writerContext),
+      ICertificateProductItemRepository
     {
     }
 }

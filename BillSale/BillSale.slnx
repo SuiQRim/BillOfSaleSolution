@@ -9,8 +9,10 @@
   <Folder Name="/DAL/">
     <Project Path="D:/Users/romik/Documents/Skill/C#/BillOfSaleSolution/BillSale/DAL/BillSale.DAL.Contracts/BillSale.DAL.Contracts.csproj" Id="ef55af3b-ef58-4a60-acce-0aba040cf043" />
     <Project Path="DAL/BillSale.DAL.Context.Repositories/BillSale.DAL.Context.Repositories.csproj" Id="6f36b828-16f4-4b26-a353-68901c9aca66" />
+    <Project Path="DAL/BillSale.DAL.Context.Tests/BillSale.DAL.Context.Tests.csproj" Id="2da17fd8-9142-4568-9af8-4bb00c361bb5" />
     <Project Path="DAL/BillSale.DAL.Context/BillSale.DAL.Context.csproj" Id="d9efa158-cc94-473a-b5d4-2195c5a3b922" />
     <Project Path="DAL/BillSale.DAL.Repositories.Contracts/BillSale.DAL.Repositories.Contracts.csproj" Id="96595a7d-f7a8-4dea-8edc-79dd4b9f0958" />
+    <Project Path="DAL/BillSale.DAL.Repositories.Tests/BillSale.DAL.Repositories.Tests.csproj" Id="fe44df91-0437-4f36-8c62-6596ef9fd2be" />
     <Project Path="DAL/BillSale.DAL.Repositories/BillSale.DAL.Repositories.csproj" Id="c82f14c7-3cbd-4da9-87a0-6038fce56dac" />
   </Folder>
   <Folder Name="/Solution Items/">

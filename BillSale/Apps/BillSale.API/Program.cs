@@ -24,7 +24,7 @@ builder.Services.AddSingleton<IIdentityProvider, IdentityProvider>();
 builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
-builder.Services.AddScoped<ICertificateProductItemRepository, TransferCertificateProductRepository>();
+builder.Services.AddScoped<ICertificateProductItemRepository, CertificateProductItemRepository>();
 
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 builder.Services.AddScoped<IProductService, ProductService>();
