@@ -34,7 +34,7 @@ namespace BillSale.BLL.Services.Contracts
         /// </summary>
         /// <param name="productModel">Продукт</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task UpdateProductAsync(ProductModel productModel, CancellationToken cancellationToken);
+        Task UpdateProductAsync(ProductUpdateModel productModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаление продукта

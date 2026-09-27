@@ -23,9 +23,12 @@ namespace BillSale.BLL.Services
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="certificateRepository">Репозиторий сущности</param>
-        /// <param name="unitOfWork">Обьект еденицы работы</param>
-        /// <param name="mapper">маппер</param>
+        /// <param name="certificateRepository">Репозиторий сертификатов</param>
+        /// <param name="productItemRepository">Репозиторий элементов продуктов</param>
+        /// <param name="productRepository">Репозиторий продуктов</param>
+        /// <param name="companyRepository">Репозиторий компаний</param>
+        /// <param name="unitOfWork">Объект единицы работы</param>
+        /// <param name="mapper">Маппер</param>
         public CertificateService(ICertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository,
             IProductRepository productRepository, ICompanyRepository companyRepository,
             IUnitOfWork unitOfWork, IMapper mapper)

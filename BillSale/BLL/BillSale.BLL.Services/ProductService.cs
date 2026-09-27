@@ -61,7 +61,7 @@ namespace BillSale.BLL.Services
         }
 
         /// <inheritdoc/>
-        public async Task UpdateProductAsync(ProductModel productModel, CancellationToken cancellationToken)
+        public async Task UpdateProductAsync(ProductUpdateModel productModel, CancellationToken cancellationToken)
         {
             var entity = await productRepository.GetProductByIdAsync(productModel.Id, cancellationToken);
             if (entity is null)

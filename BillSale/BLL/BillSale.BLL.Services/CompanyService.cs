@@ -61,7 +61,7 @@ namespace BillSale.BLL.Services
         }
 
         /// <inheritdoc/>
-        public async Task UpdateCompanyAsync(CompanyModel companyModel, CancellationToken cancellationToken)
+        public async Task UpdateCompanyAsync(CompanyUpdateModel companyModel, CancellationToken cancellationToken)
         {
             var entity = await companyRepository.GetCompanyByIdAsync(companyModel.Id, cancellationToken);
             if (entity is null)
