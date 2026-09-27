@@ -16,12 +16,12 @@ namespace BillSale.API.Models.Certificate
         /// <summary>
         /// Продавец
         /// </summary>
-        public CompanyDetailsApiModel Seller { get; set; } = null!;
+        public CompanyApiModel Seller { get; set; } = null!;
 
         /// <summary>
         /// Покупатель
         /// </summary>
-        public CompanyDetailsApiModel Purchaser { get; set; } = null!;
+        public CompanyApiModel Purchaser { get; set; } = null!;
 
         /// <summary>
         /// Город

@@ -23,9 +23,12 @@ namespace BillSale.BLL.Services
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="certificateRepository">Репозиторий сущности</param>
-        /// <param name="unitOfWork">Обьект еденицы работы</param>
-        /// <param name="mapper">маппер</param>
+        /// <param name="certificateRepository">Репозиторий сертификатов</param>
+        /// <param name="productItemRepository">Репозиторий элементов продуктов</param>
+        /// <param name="productRepository">Репозиторий продуктов</param>
+        /// <param name="companyRepository">Репозиторий компаний</param>
+        /// <param name="unitOfWork">Объект единицы работы</param>
+        /// <param name="mapper">Маппер</param>
         public CertificateService(ICertificateRepository certificateRepository, ICertificateProductItemRepository productItemRepository,
             IProductRepository productRepository, ICompanyRepository companyRepository,
             IUnitOfWork unitOfWork, IMapper mapper)
@@ -107,13 +110,13 @@ namespace BillSale.BLL.Services
 
         private async Task CompanyExistAsync(Guid sellerId, Guid purchaserId, CancellationToken cancellationToken)
         {
-            var seller = await companyRepository.GetCompanyById(sellerId, cancellationToken);
+            var seller = await companyRepository.GetCompanyByIdAsync(sellerId, cancellationToken);
             if (seller is null)
             {
                 throw new EntityNotFoundException<Company>(sellerId);
             }
 
-            var purchaser = await companyRepository.GetCompanyById(purchaserId, cancellationToken);
+            var purchaser = await companyRepository.GetCompanyByIdAsync(purchaserId, cancellationToken);
             if (purchaser is null)
             {
                 throw new EntityNotFoundException<Company>(purchaserId);
@@ -124,7 +127,7 @@ namespace BillSale.BLL.Services
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id != Guid.Empty))
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);
@@ -141,7 +144,7 @@ namespace BillSale.BLL.Services
         {
             foreach (var productModel in certificateModel.Products.Where(x => x.Id == Guid.Empty))
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);
@@ -177,7 +180,7 @@ namespace BillSale.BLL.Services
 
             foreach (var productModel in entity.ProductItems)
             {
-                var product = await productRepository.GetProductById(productModel.ProductId, cancellationToken);
+                var product = await productRepository.GetProductByIdAsync(productModel.ProductId, cancellationToken);
                 if (product is null)
                 {
                     throw new EntityNotFoundException<Product>(productModel.ProductId);

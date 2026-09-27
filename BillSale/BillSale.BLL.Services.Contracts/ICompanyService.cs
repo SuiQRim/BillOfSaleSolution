@@ -27,14 +27,14 @@ namespace BillSale.BLL.Services.Contracts
         /// </summary>
         /// <param name="companyModel">Компания</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task AddCompanyAsync(CompanyCreateModel companyModel, CancellationToken cancellationToken);
+        Task<CompanyModel> AddCompanyAsync(CompanyCreateModel companyModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновление компании
         /// </summary>
         /// <param name="companyModel">Компания</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task UpdateCompanyAsync(CompanyModel companyModel, CancellationToken cancellationToken);
+        Task UpdateCompanyAsync(CompanyUpdateModel companyModel, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаление компании

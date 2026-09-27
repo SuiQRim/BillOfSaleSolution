@@ -1,4 +1,5 @@
 using BillSale.BLL.Services.Contracts.Models.Certificate;
+using BillSale.BLL.Services.Validators.Constraints;
 using FluentValidation;
 
 namespace BillSale.BLL.Services.Validators.Certificate
@@ -8,14 +9,9 @@ namespace BillSale.BLL.Services.Validators.Certificate
     /// </summary>
     public class CertificateCreateModelValidator : AbstractValidator<CertificateCreateModel>
     {
-        private const int CityNameMaxLength = 100;
-        private const int MinCount = 1;
-        private const int MaxCount = 100000;
-
         /// <summary>
         /// ctor
         /// </summary>
-
         public CertificateCreateModelValidator()
         {
             RuleFor(x => x.SellerId)
@@ -29,8 +25,8 @@ namespace BillSale.BLL.Services.Validators.Certificate
             RuleFor(x => x.City)
                 .NotEmpty()
                 .WithMessage("Город обязателен")
-                .MaximumLength(CityNameMaxLength)
-                .WithMessage($"Длина названия не может быть больше {CityNameMaxLength}");
+                .MaximumLength(CertificateConstraints.CityNameMaxLength)
+                .WithMessage($"Длина названия не может быть больше {CertificateConstraints.CityNameMaxLength}");
 
             RuleFor(x => x.Products)
                 .NotEmpty()
@@ -44,9 +40,10 @@ namespace BillSale.BLL.Services.Validators.Certificate
                         .WithMessage("Продукт обязателен");
 
                     product.RuleFor(x => x.Count)
-                        .InclusiveBetween(MinCount, MaxCount)
+                        .InclusiveBetween(CertificateConstraints.MinCount, CertificateConstraints.MaxCount)
                         .WithMessage(
-                            $"Количество продуктов в позиции должно быть больше {MinCount - 1} и не более {MaxCount}");
+                            $"Количество продуктов в позиции должно быть больше {CertificateConstraints.MinCount - 1} " +
+                            $"и не более {CertificateConstraints.MaxCount}");
 
                     product.RuleFor(x => x.Price)
                         .GreaterThan(0)

@@ -22,15 +22,20 @@ namespace BillSale.API.Automapper
         {
             CreateMap<CertificateModel, CertificateApiModel>();
             CreateMap<CertificateCreateApiModel, CertificateCreateModel>();
-            CreateMap<ProductCreateApiModel, ProductCreateModel>();
             CreateMap<CertificateProductCreateApiModel, CertificateProductCreateModel>();
 
             CreateMap<CertificateDetailModel, CertificateDetailsApiModel>();
             CreateMap<CertificateProductDetailsModel, CertificateProductDetailsApiModel>();
-            CreateMap<ProductModel, ProductApiModel>();
-            CreateMap<CompanyModel, CompanyDetailsApiModel>();
             CreateMap<CertificateUpdateApiModel, CertificateUpdateModel>();
             CreateMap<CertificateProductUpdateApiModel, CertificateProductUpdateModel>();
+
+            CreateMap<ProductModel, ProductApiModel>();
+            CreateMap<ProductCreateApiModel, ProductCreateModel>();
+            CreateMap<ProductApiModel, ProductUpdateModel>();
+
+            CreateMap<CompanyModel, CompanyApiModel>();
+            CreateMap<CompanyCreateApiModel, CompanyCreateModel>();
+            CreateMap<CompanyApiModel, CompanyUpdateModel>();
         }
     }
 }

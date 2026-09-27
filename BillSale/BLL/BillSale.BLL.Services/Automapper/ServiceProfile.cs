@@ -2,6 +2,7 @@ using AutoMapper;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
 using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
 using BillSale.BLL.Services.Contracts.Models.Company;
+using BillSale.BLL.Services.Contracts.Models.Product;
 using BillSale.Entities;
 
 namespace BillSale.BLL.Services.Automapper
@@ -16,6 +17,29 @@ namespace BillSale.BLL.Services.Automapper
         /// </summary>
         public ServiceProfile()
         {
+            CreateMapForCertificate();
+
+            CreaterMapForCompany();
+
+            CreateMapForProduct();
+        }
+
+        private void CreateMapForProduct()
+        {
+            CreateMap<Product, ProductModel>();
+            CreateMap<ProductCreateModel, Product>();
+            CreateMap<ProductUpdateModel, Product>();
+        }
+
+        private void CreaterMapForCompany()
+        {
+            CreateMap<Company, CompanyModel>();
+            CreateMap<CompanyCreateModel, Company>();
+            CreateMap<CompanyUpdateModel, Company>();
+        }
+
+        private void CreateMapForCertificate()
+        {
             CreateMap<Certificate, CertificateModel>()
                 .ForMember(
                     dest => dest.SellerName,
@@ -24,8 +48,22 @@ namespace BillSale.BLL.Services.Automapper
                     dest => dest.PurchaserName,
                     opt => opt.MapFrom(src => src.Purchaser.OrganizationName));
 
-            CreateMap<Certificate, CertificateDetailModel>();
-            CreateMap<Company, CompanyModel>();
+            CreateMap<Certificate, CertificateDetailModel>()
+                .ForMember(
+                    dest => dest.Products,
+                    opt => opt.MapFrom(src => src.ProductItems));
+
+
+            CreateMap<CertificateUpdateModel, Certificate>()
+                .ForMember(
+                    dest => dest.ProductItems,
+                    opt => opt.Ignore());
+
+            CreateMap<CertificateCreateModel, Certificate>()
+                .ForMember(
+                    dest => dest.ProductItems,
+                    opt => opt.MapFrom(src => src.Products));
+
 
             CreateMap<CertificateProduct, CertificateProductDetailsModel>()
                 .ForMember(
@@ -35,22 +73,7 @@ namespace BillSale.BLL.Services.Automapper
                     dest => dest.MeasureUnit,
                     opt => opt.MapFrom(src => src.Product.MeasureUnit));
 
-            CreateMap<Certificate, CertificateDetailModel>()
-                .ForMember(
-                    dest => dest.Products,
-                    opt => opt.MapFrom(src => src.ProductItems));
-
-            CreateMap<CertificateCreateModel, Certificate>()
-                .ForMember(
-                    dest => dest.ProductItems,
-                    opt => opt.MapFrom(src => src.Products));
-
             CreateMap<CertificateProductCreateModel, CertificateProduct>();
-
-            CreateMap<CertificateUpdateModel, Certificate>()
-                .ForMember(
-                    dest => dest.ProductItems,
-                    opt => opt.Ignore());
 
             CreateMap<CertificateProductUpdateModel, CertificateProduct>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

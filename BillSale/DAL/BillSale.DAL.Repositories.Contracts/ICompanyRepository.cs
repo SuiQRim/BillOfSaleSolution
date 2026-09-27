@@ -19,7 +19,7 @@ namespace BillSale.DAL.Repositories.Contracts
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <param name="cancellationToken">Токен отслеживания</param>
-        Task<Company?> GetCompanyById(Guid id, CancellationToken cancellationToken);
+        Task<Company?> GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken);
 
     }
 }
