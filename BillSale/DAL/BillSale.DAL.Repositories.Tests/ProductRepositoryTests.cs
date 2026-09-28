@@ -1,5 +1,6 @@
 using Ahatornn.TestGenerator;
 using BillSale.DAL.Context.Tests;
+using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 using FluentAssertions;
@@ -13,6 +14,9 @@ namespace BillSale.DAL.Repositories.Tests
     {
         private readonly IProductRepository productRepository;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public ProductRepositoryTests()
         {
             productRepository = new ProductRepository(WriterContext, Context);
@@ -157,7 +161,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="IProductRepository.Add"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Add"/> у <see cref="IProductRepository"/>,
         /// что новый продукт успешно добавляется в базу данных.
         /// </summary>
         [Fact]
@@ -180,7 +184,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="IProductRepository.Update"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Update"/> у <see cref="IProductRepository"/>,
         /// что изменения существующего продукта успешно сохраняются в базе данных.
         /// </summary>
         [Fact]
@@ -215,7 +219,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="IProductRepository.Delete"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Delete"/> у <see cref="IProductRepository"/>,
         /// что после удаления продукт не возвращается методами чтения репозитория.
         /// </summary>
         [Fact]

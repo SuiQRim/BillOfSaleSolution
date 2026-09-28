@@ -1,5 +1,6 @@
 using Ahatornn.TestGenerator;
 using BillSale.DAL.Context.Tests;
+using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 using FluentAssertions;
@@ -14,6 +15,9 @@ namespace BillSale.DAL.Repositories.Tests
     {
         private readonly ICertificateProductItemRepository certificateProductItemRepository;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public CertificateProductItemRepositoryTests()
         {
             certificateProductItemRepository =
@@ -21,7 +25,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Add"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Add"/> у <see cref="ICertificateProductItemRepository"/>,
         /// что новый продукт акта успешно добавляется в базу данных.
         /// </summary>
         [Fact]
@@ -43,7 +47,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Update"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Update"/>  <see cref="ICertificateProductItemRepository"/>,
         /// что изменения существующего продукта акта успешно сохраняются
         /// в базе данных.
         /// </summary>
@@ -78,7 +82,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ICertificateProductItemRepository.Delete"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Delete"/> у <see cref="ICertificateProductItemRepository"/>,
         /// что после удаления продукт акта помечается как удалённый.
         /// </summary>
         [Fact]

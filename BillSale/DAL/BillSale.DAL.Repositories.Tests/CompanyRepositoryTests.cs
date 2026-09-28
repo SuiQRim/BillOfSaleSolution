@@ -1,5 +1,6 @@
 using Ahatornn.TestGenerator;
 using BillSale.DAL.Context.Tests;
+using BillSale.DAL.Contracts.Repositories;
 using BillSale.DAL.Repositories.Contracts;
 using BillSale.Entities;
 using FluentAssertions;
@@ -13,6 +14,9 @@ namespace BillSale.DAL.Repositories.Tests
     {
         private readonly ICompanyRepository companyRepository;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
         public CompanyRepositoryTests()
         {
             companyRepository = new CompanyRepository(WriterContext, Context);
@@ -160,7 +164,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ICompanyRepository.Add"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Add"/> у <see cref="ICompanyRepository"/>,
         /// что новая компания успешно добавляется в базу данных.
         /// </summary>
         [Fact]
@@ -183,7 +187,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ICompanyRepository.Update"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Update"/> у <see cref="ICompanyRepository"/>,
         /// что изменения существующей компании успешно сохраняются в базе данных.
         /// </summary>
         [Fact]
@@ -221,7 +225,7 @@ namespace BillSale.DAL.Repositories.Tests
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ICompanyRepository.Delete"/>,
+        /// Проверяет метод <see cref="IBaseWriteRepository{T}.Delete"/> у <see cref="ICompanyRepository"/>,
         /// что после удаления компания не возвращается методами чтения репозитория.
         /// </summary>
         [Fact]
