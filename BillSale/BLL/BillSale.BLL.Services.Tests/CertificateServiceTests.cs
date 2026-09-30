@@ -639,7 +639,6 @@ public class CertificateServiceTests : BillSaleContextInMemory
     /// <summary>
     /// Проверяет добавление новой позиции продукта при обновлении сертификата с несуществующим продуктом
     /// </summary>
-    /// <returns></returns>
     [Fact]
     public async Task UpdateCertificateShouldThrowNotFoundExceptionWhenNewProductDoesNotExist()
     {
@@ -719,7 +718,7 @@ public class CertificateServiceTests : BillSaleContextInMemory
             .FirstOrDefaultAsync(x => x.Id == entity.Id);
 
         result.Should().NotBeNull();
-        result!.DeletedAt.Should().NotBeNull();
+        result.DeletedAt.Should().NotBeNull();
     }
 
     /// <summary>
