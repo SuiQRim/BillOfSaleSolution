@@ -53,7 +53,11 @@ builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<BillSaleContext>()
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
-builder.Services.AddControllers(opts => opts.Filters.Add<ExceptionFilter>());
+var controllers = builder.Services.AddControllers(opts => opts.Filters.Add<ExceptionFilter>());
+if (builder.Environment.IsEnvironment("integration"))
+{
+    controllers.AddControllersAsServices();
+}
 
 builder.Services.AddHealthChecks();
 builder.Services.AddOpenApi();
@@ -72,3 +76,10 @@ app.MapHealthChecks("health");
 app.MapControllers();
 
 app.Run();
+
+/// <summary>
+/// Маркерный класс для интеграционных тестов
+/// </summary>
+public partial class Program
+{
+}
