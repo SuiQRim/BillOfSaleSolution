@@ -16,6 +16,9 @@ namespace BillSale.API.Controllers
     public class CertificateController : ControllerBase
     {
         private readonly ICertificateService certificateService;
+
+        private readonly ICertificateExcelService certificateExcelService;
+
         private readonly IMapper mapper;
         private readonly IValidateService validateService;
 
@@ -23,11 +26,13 @@ namespace BillSale.API.Controllers
         /// ctor
         /// </summary>
         /// <param name="certificateService">Сервис актов</param>
+        /// <param name="certificateExcelService">Сервис генерации Excel</param>
         /// <param name="mapper">Маппер для преобразования моделей</param>
         /// <param name="validateService">Сервис валидации</param>
-        public CertificateController(ICertificateService certificateService, IMapper mapper, IValidateService validateService)
+        public CertificateController(ICertificateService certificateService, ICertificateExcelService certificateExcelService, IMapper mapper, IValidateService validateService)
         {
             this.certificateService = certificateService;
+            this.certificateExcelService = certificateExcelService;
             this.mapper = mapper;
             this.validateService = validateService;
         }
@@ -73,6 +78,25 @@ namespace BillSale.API.Controllers
         {
             var certificates = await certificateService.GetDetailCertificateByIdAsync(id, cancellationToken);
             return Ok(mapper.Map<CertificateDetailsApiModel>(certificates));
+        }
+
+        /// <summary>
+        /// Получить excel файл информацию об акте
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <returns>Детальный акт</returns>
+        [HttpGet("{id:guid}/excel")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCertificateExcel(Guid id, CancellationToken cancellationToken)
+        {
+            var certificate = await certificateService.GetDetailCertificateByIdAsync(id, cancellationToken);
+            var stream = await certificateExcelService.GenerateCertificateExcelAsync(certificate, cancellationToken);
+            return File(
+                 stream,
+                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                 $"certificate-{id}.xlsx");
         }
 
         /// <summary>
