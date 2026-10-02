@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BillSale.BLL.Services.Contracts\BillSale.BLL.Services.Contracts.csproj" />
     <ProjectReference Include="..\..\DAL\BillSale.DAL.Repositories.Contracts\BillSale.DAL.Repositories.Contracts.csproj" />
+    <ProjectReference Include="..\BillSale.BLL.Services.Contracts\BillSale.BLL.Services.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

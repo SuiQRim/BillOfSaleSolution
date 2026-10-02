@@ -36,6 +36,13 @@ namespace BillSale.Entities.Configurations
                 .WithOne()
                 .HasForeignKey(x => x.CertificateId)
                 .IsRequired();
+
+            builder.Property(x => x.ArticulNumber)
+                .UseIdentityColumn()
+                .IsRequired();
+
+            builder.HasIndex(x => x.ArticulNumber)
+                .IsUnique();
         }
     }
 }
