@@ -18,6 +18,10 @@ namespace BillSale.API.Tests
     {
         private static readonly JsonSerializerOptions jsonOptions = new(JsonSerializerDefaults.Web);
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="fixture">Фикстура для интеграционных тестов</param>
         public CertificateControllerTests(BillSaleApiFixture fixture) : base(fixture)
         {
         }
@@ -32,7 +36,7 @@ namespace BillSale.API.Tests
             await SeedCertificateTestDataAsync();
 
             var client = CreateClient();
-            var response = await client.GetAsync("/certificate");
+            var response = await client.GetAsync("/api/certificate");
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -55,7 +59,7 @@ namespace BillSale.API.Tests
             var data = await SeedCertificateTestDataAsync();
 
             var client = CreateClient();
-            var response = await client.GetAsync($"/certificate/{data.Certificate.Id}");
+            var response = await client.GetAsync($"/api/certificate/{data.Certificate.Id}");
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -78,7 +82,7 @@ namespace BillSale.API.Tests
             await SeedCertificateTestDataAsync();
 
             var client = CreateClient();
-            var response = await client.GetAsync($"/certificate/{Guid.NewGuid()}");
+            var response = await client.GetAsync($"/api/certificate/{Guid.NewGuid()}");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -94,7 +98,7 @@ namespace BillSale.API.Tests
 
             var client = CreateClient();
             var response = await client.GetAsync(
-                $"/certificate/details/{data.Certificate.Id}");
+                $"/api/certificate/details/{data.Certificate.Id}");
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -120,7 +124,7 @@ namespace BillSale.API.Tests
 
             var client = CreateClient();
             var response = await client.GetAsync(
-                $"/certificate/details/{Guid.NewGuid()}");
+                $"/api/certificate/details/{Guid.NewGuid()}");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -162,7 +166,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -235,7 +239,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -281,7 +285,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -327,7 +331,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -360,7 +364,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
@@ -405,7 +409,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -461,7 +465,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -494,7 +498,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -527,7 +531,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -563,7 +567,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -621,7 +625,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -656,7 +660,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -691,7 +695,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/certificate",
+                "/api/certificate",
                 request);
 
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
@@ -709,7 +713,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.DeleteAsync(
-                $"/certificate/{data.Certificate.Id}");
+                $"/api/certificate/{data.Certificate.Id}");
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
@@ -723,7 +727,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.DeleteAsync(
-                $"/certificate/{Guid.NewGuid()}");
+                $"/api/certificate/{Guid.NewGuid()}");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

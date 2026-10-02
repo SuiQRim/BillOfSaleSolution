@@ -12,7 +12,7 @@ namespace BillSale.API.Controllers
     /// Контроллер для работы с актами передачи
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CertificateController : ControllerBase
     {
         private readonly ICertificateService certificateService;
