@@ -16,9 +16,7 @@ namespace BillSale.API.Controllers
     public class CertificateController : ControllerBase
     {
         private readonly ICertificateService certificateService;
-
         private readonly ICertificateExcelService certificateExcelService;
-
         private readonly IMapper mapper;
         private readonly IValidateService validateService;
 

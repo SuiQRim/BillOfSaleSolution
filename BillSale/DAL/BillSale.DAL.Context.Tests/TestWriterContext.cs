@@ -4,6 +4,9 @@ using Moq;
 
 namespace BillSale.DAL.Context.Tests
 {
+    /// <summary>
+    /// Контекст для тестирования <see cref="IWriter"/>
+    /// </summary>
     public class TestWriterContext : IDbWriterContext
     {
         private readonly Mock<IDateTimeProvider> dateTimeProviderMock;
@@ -12,6 +15,7 @@ namespace BillSale.DAL.Context.Tests
         /// <summary>
         /// Инициализирует новый экземпляр <see cref="TestWriterContext"/>
         /// </summary>
+        /// <param name="writer">Писатель сущностей в базу данных</param>
         public TestWriterContext(IWriter writer)
         {
             Writer = writer;

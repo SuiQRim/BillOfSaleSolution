@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using BillSale.DAL.Contracts.Interfaces;
 
 namespace BillSale.DAL.Contracts.Repositories
 {
+    /// <summary>
+    /// Базовый интерфейс репозитория для операций записи
+    /// </summary>
+    /// <typeparam name="T">Тип сущности</typeparam>
     public interface IBaseWriteRepository<T> where T : class, IEntity
     {
         /// <summary>
