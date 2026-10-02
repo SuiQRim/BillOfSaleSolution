@@ -8,7 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Ahatornn.TestGenerator" Version="1.1.29" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.10" />
     <PackageReference Include="Moq" Version="4.21.0" />
   </ItemGroup>
 

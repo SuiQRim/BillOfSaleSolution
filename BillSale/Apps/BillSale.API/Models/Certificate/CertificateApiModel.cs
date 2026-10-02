@@ -11,6 +11,11 @@ namespace BillSale.API.Models.Certificate
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Артикул
+        /// </summary>
+        public int ArticulNumber { get; set; }
+
+        /// <summary>
         /// Идентификатор продавца
         /// </summary>
         public string SellerName { get; set; } = string.Empty;

@@ -36,11 +36,11 @@ namespace BillSale.API.Controllers
         /// </summary>
         /// <param name="cancellationToken">Токен отмены</param>
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyCollection<CompanyModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<CompanyApiModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCompanies(CancellationToken cancellationToken)
         {
             var companies = await companyService.GetCompaniesAsync(cancellationToken);
-            return Ok(mapper.Map<IReadOnlyCollection<CompanyModel>>(companies));
+            return Ok(mapper.Map<IReadOnlyCollection<CompanyApiModel>>(companies));
         }
 
         /// <summary>
@@ -50,12 +50,12 @@ namespace BillSale.API.Controllers
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Компания</returns>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(CompanyModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CompanyApiModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCompany(Guid id, CancellationToken cancellationToken)
         {
             var company = await companyService.GetCompanyByIdAsync(id, cancellationToken);
-            return Ok(mapper.Map<CompanyModel>(company));
+            return Ok(mapper.Map<CompanyApiModel>(company));
         }
 
         /// <summary>

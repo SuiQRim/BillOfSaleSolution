@@ -14,6 +14,11 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Артикул
+        /// </summary>
+        public int ArticulNumber { get; set; }
+
+        /// <summary>
         /// Продавец
         /// </summary>
         public CompanyModel Seller { get; set; } = null!;
