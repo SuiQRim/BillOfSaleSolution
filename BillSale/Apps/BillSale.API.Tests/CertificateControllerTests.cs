@@ -32,12 +32,15 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task Get_ReturnsAllCertificates()
         {
+            // Arrange
             var expected = await SeedCertificateTestDataAsync();
             await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
             var response = await client.GetAsync("/api/certificate");
 
+            // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var certificates = await response.Content
@@ -56,11 +59,14 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task GetById_ReturnCertificate()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
             var response = await client.GetAsync($"/api/certificate/{data.Certificate.Id}");
 
+            // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var certificate = await response.Content
@@ -79,11 +85,14 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task GetById_WhenNotFound_Returns404()
         {
+            // Arrange
             await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
             var response = await client.GetAsync($"/api/certificate/{Guid.NewGuid()}");
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -94,12 +103,15 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task GetDetailsById_ReturnCertificate()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
             var response = await client.GetAsync(
                 $"/api/certificate/details/{data.Certificate.Id}");
 
+            // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var certificate = await response.Content
@@ -120,12 +132,64 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task GetByIdDetails_WhenNotFound_Returns404()
         {
+            // Arrange
             await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
             var response = await client.GetAsync(
                 $"/api/certificate/details/{Guid.NewGuid()}");
 
+            // Assert
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        /// <summary>
+        /// Тест получить сертификат в формате excel
+        /// </summary>
+        [Fact]
+        public async Task GetCertificateExcel_ShouldReturnExcelFile()
+        {
+            // Arrange
+            var testData = await SeedCertificateTestDataAsync();
+
+            var client = CreateClient();
+
+            // Act
+            var response = await client.GetAsync(
+                $"api/certificate/{testData.Certificate.Id}/excel");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            Assert.Equal(
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                response.Content.Headers.ContentType?.MediaType);
+
+            Assert.NotNull(response.Content.Headers.ContentDisposition);
+            Assert.Contains(
+                ".xlsx",
+                response.Content.Headers.ContentDisposition.FileName);
+
+            var content = await response.Content.ReadAsByteArrayAsync();
+
+            Assert.NotEmpty(content);
+        }
+
+        /// <summary>
+        /// Тест получить сертификат в формате excel, когда такого сертификата нет
+        /// </summary>
+        [Fact]
+        public async Task GetCertificateExcel_ShouldReturnNotFound_WhenCertificateDoesNotExist()
+        {
+            // Arrange
+            var client = CreateClient();
+
+            // Act
+            var response = await client.GetAsync(
+                $"/certificate/{Guid.NewGuid()}/excel");
+
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -135,6 +199,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task CreateCertificate_CreatesCertificate()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var firstProduct = new CertificateProductCreateApiModel
@@ -163,12 +228,15 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
 
             var response = await client.PostAsJsonAsync(
                 "/api/certificate",
                 request);
 
+
+            // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var result = await response.Content
@@ -206,6 +274,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task CreateCertificate_WhenProductNotFound_Returns404()
         {
+            // Arrange
             var seller = new Company
             {
                 Id = Guid.NewGuid(),
@@ -236,12 +305,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PostAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -251,6 +321,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task CreateCertificate_WhenSellerNotFound_Returns404()
         {
+            // Arrange
             var purchaser = new Company
             {
                 Id = Guid.NewGuid(),
@@ -282,12 +353,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PostAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -297,6 +369,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task CreateCertificate_WhenPurchaserNotFound_Returns404()
         {
+            // Arrange
             var seller = new Company
             {
                 Id = Guid.NewGuid(),
@@ -328,12 +401,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PostAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -343,6 +417,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task CreateCertificate_WhenCityIsEmpty_Returns422()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateCreateApiModel
@@ -361,12 +436,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PostAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
         }
 
@@ -376,6 +452,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenValidRequest_UpdatesCertificateAndProductItems()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var updateProdItem = new CertificateProductUpdateApiModel
@@ -406,12 +483,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
             var certificate = await Context.Set<Certificate>()
@@ -444,6 +522,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenCertificateNotFound_Returns404()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateUpdateApiModel
@@ -462,12 +541,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -477,6 +557,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenSellerNotFound_Returns404()
         {
+            // Arange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateUpdateApiModel
@@ -495,12 +576,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -510,6 +592,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenPurchaserNotFound_Returns404()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateUpdateApiModel
@@ -528,12 +611,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -543,6 +627,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenProductNotFound_Returns404()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var newProductItem = new CertificateProductUpdateApiModel
@@ -564,12 +649,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -579,6 +665,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenProductItemBelongsToAnotherCertificate_Returns404()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var anotherCertificate = new Certificate
@@ -622,12 +709,14 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -637,6 +726,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenProductItemNotFound_Returns404()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateUpdateApiModel
@@ -657,12 +747,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
@@ -672,6 +763,7 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task UpdateCertificate_WhenCityIsEmpty_Returns422()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
             var request = new CertificateUpdateApiModel
@@ -692,12 +784,13 @@ namespace BillSale.API.Tests
                 ]
             };
 
+            // Act
             var client = CreateClient();
-
             var response = await client.PutAsJsonAsync(
                 "/api/certificate",
                 request);
 
+            // Assert
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
 
         }
@@ -708,13 +801,15 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task DeleteCertificate_WhenCertificateExists_ReturnsNoContent()
         {
+            // Arrange
             var data = await SeedCertificateTestDataAsync();
 
+            // Act
             var client = CreateClient();
-
             var response = await client.DeleteAsync(
                 $"/api/certificate/{data.Certificate.Id}");
 
+            // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
 
@@ -724,11 +819,12 @@ namespace BillSale.API.Tests
         [Fact]
         public async Task DeleteCertificate_WhenCertificateNotFound_Returns404()
         {
+            // Act
             var client = CreateClient();
-
             var response = await client.DeleteAsync(
                 $"/api/certificate/{Guid.NewGuid()}");
 
+            // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
