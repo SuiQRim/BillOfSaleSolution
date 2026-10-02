@@ -1,9 +1,8 @@
-using BillSale.API.Tests.Infrastructure;
 using BillSale.DAL.Context;
 using BillSale.DAL.Contracts.Repositories;
 
 
-namespace FinalExercise.Api.Tests.Infrastructure;
+namespace BillSale.API.Tests.Infrastructure;
 
 /// <summary>
 /// Базовый класс для интеграционных тестов с авторизацией.
@@ -11,7 +10,7 @@ namespace FinalExercise.Api.Tests.Infrastructure;
 /// тестовых пользователей и авторизованных HTTP-клиентов.
 /// Каждый вызов хелперов создаёт свежие сущности и клиентов — без мутации общего состояния.
 /// </summary>
-[Collection(nameof(FinalExerciseApiTestCollection))]
+[Collection(nameof(BillsalseApiTestCollection))]
 public abstract class IntegrationTestBase
 {
     private readonly BillSaleApiFixture fixture;

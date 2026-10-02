@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BillSale.API.Tests.Infrastructure
 {
+    /// <summary>
+    /// Фабрика теста приложения
+    /// </summary>
     public class TestWebApplicationFactory : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)

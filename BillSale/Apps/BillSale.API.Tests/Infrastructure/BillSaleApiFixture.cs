@@ -1,8 +1,9 @@
+using System.Diagnostics;
 using BillSale.DAL.Context;
 using BillSale.DAL.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace BillSale.API.Tests.Infrastructure
 {
@@ -64,6 +65,17 @@ namespace BillSale.API.Tests.Infrastructure
         public virtual async ValueTask InitializeAsync()
         {
             await Context.Database.MigrateAsync();
+            var assembly = typeof(BillSaleContext).Assembly;
+
+            Debug.WriteLine(assembly.FullName);
+
+            var migrationTypes = assembly.GetTypes()
+                .Where(x => x.IsSubclassOf(typeof(Migration)));
+
+            foreach (var type in migrationTypes)
+            {
+                Debug.WriteLine(type.FullName);
+            }
         }
 
         /// <inheritdoc />
