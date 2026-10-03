@@ -13,17 +13,17 @@ namespace BillSale.BLL.Services.Validators.Constraints
         /// <summary>
         /// Максимальная длина имени
         /// </summary>
-        public const int FirstNameMaxLength = 20;
+        public const int FirstNameMaxLength = 60;
 
         /// <summary>
         /// Максимальная длина фамилии
         /// </summary>
-        public const int LastNameMaxLength = 20;
+        public const int LastNameMaxLength = 60;
 
         /// <summary>
         /// Максимальная длина отчества
         /// </summary>
-        public const int MiddleNameMaxLength = 20;
+        public const int MiddleNameMaxLength = 60;
 
         /// <summary>
         /// Максимальная длина наименования документа
