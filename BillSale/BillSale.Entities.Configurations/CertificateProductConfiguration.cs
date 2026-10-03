@@ -12,7 +12,13 @@ namespace BillSale.Entities.Configurations
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<CertificateProduct> builder)
         {
-            builder.ToTable("CertificateProduct");
+            builder.ToTable("CertificateProduct", tableBuilder =>
+            {
+                tableBuilder.HasCheckConstraint(
+                    "CK_CertificateProduct_Count_Range",
+                    "\"Count\" BETWEEN 1 AND 100000");
+            });
+
             builder.HasIdAsKey();
             builder.CreateAuditConfiguration();
             builder.UpdateAuditConfiguration();

@@ -24,15 +24,15 @@ namespace BillSale.Entities.Configurations
 
             builder.Property(x => x.FirstName)
                .IsRequired()
-               .HasMaxLength(20);
+               .HasMaxLength(60);
 
             builder.Property(x => x.LastName)
                .IsRequired()
-               .HasMaxLength(20);
+               .HasMaxLength(60);
 
             builder.Property(x => x.MiddleName)
                .IsRequired()
-               .HasMaxLength(20);
+               .HasMaxLength(60);
 
             builder.Property(x => x.DocumentName)
                .IsRequired()
