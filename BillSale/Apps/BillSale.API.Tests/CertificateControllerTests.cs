@@ -221,6 +221,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller2.Id,
                 PurchaserId = data.Purchaser2.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     firstProduct,
@@ -265,6 +266,7 @@ namespace BillSale.API.Tests
             Assert.Equal(request.SellerId, certificate.SellerId);
             Assert.Equal(request.PurchaserId, certificate.PurchaserId);
             Assert.Equal(request.City, certificate.City);
+            Assert.Equal(request.PreparationDate, certificate.PreparationDate);
             Assert.Equal(2, certificate.ProductItems.Count);
         }
 
@@ -295,6 +297,7 @@ namespace BillSale.API.Tests
                 SellerId = seller.Id,
                 PurchaserId = purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -343,6 +346,7 @@ namespace BillSale.API.Tests
                 SellerId = Guid.NewGuid(),
                 PurchaserId = purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -391,6 +395,7 @@ namespace BillSale.API.Tests
                 SellerId = seller.Id,
                 PurchaserId = Guid.NewGuid(),
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -476,6 +481,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     updateProdItem,
@@ -531,6 +537,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
@@ -566,6 +573,7 @@ namespace BillSale.API.Tests
                 SellerId = Guid.NewGuid(),
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
@@ -601,6 +609,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = Guid.NewGuid(),
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
@@ -643,6 +652,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = data.Certificate.City,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     newProductItem
@@ -697,6 +707,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -735,6 +746,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -871,7 +883,8 @@ namespace BillSale.API.Tests
                 Id = Guid.NewGuid(),
                 SellerId = seller.Id,
                 PurchaserId = purchaser.Id,
-                City = "Москва"
+                City = "Москва",
+                PreparationDate = GetPreparationDate()
             };
 
             var productItem = new CertificateProduct
@@ -919,5 +932,7 @@ namespace BillSale.API.Tests
                 Product2 = product2
             };
         }
+
+        private static DateTimeOffset GetPreparationDate() => new DateTimeOffset(2026, 11, 23, 12, 30, 0, TimeSpan.Zero);
     }
 }

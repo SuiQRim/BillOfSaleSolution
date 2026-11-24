@@ -32,6 +32,10 @@ namespace BillSale.BLL.Services.Validators.Certificate
                 .NotEmpty()
                 .WithMessage("В акте должен быть хотя бы один продукт");
 
+            RuleFor(x => x.PreparationDate)
+                .NotEmpty()
+                .WithMessage("Дата оформления документа обязательна.");
+
             RuleForEach(x => x.Products)
                 .ChildRules(product =>
                 {
