@@ -17,7 +17,16 @@ namespace BillSale.DAL.Context
         /// </remarks>
         public BillSaleContext CreateDbContext(string[] args)
         {
-            var connectionString = "Host=localhost;Port=5432;Database=BillSale;Username=postgres;Password=12345";
+            var connectionString = Environment.GetEnvironmentVariable(
+                    "ConnectionStrings__DefaultConnection");
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException(
+                    "Для работы EF Core задайте переменную окружения " +
+                    "ConnectionStrings__DefaultConnection.");
+            }
+
             var options = new DbContextOptionsBuilder<BillSaleContext>()
                 .UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine)

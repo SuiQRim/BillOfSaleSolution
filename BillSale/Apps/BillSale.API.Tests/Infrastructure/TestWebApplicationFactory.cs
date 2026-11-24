@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Npgsql;
 
 namespace BillSale.API.Tests.Infrastructure
 {
@@ -24,12 +25,23 @@ namespace BillSale.API.Tests.Infrastructure
                 services.AddSingleton<DbContextOptions<BillSaleContext>>(provider =>
                 {
                     var configuration = provider.GetRequiredService<IConfiguration>();
+
                     var connectionString = configuration.GetConnectionString("DefaultConnection");
-                    var dbConectionOptions = new DbContextOptions<BillSaleContext>(
-                        new Dictionary<Type, IDbContextOptionsExtension>());
-                    var optionsBuilder = new DbContextOptionsBuilder<BillSaleContext>(dbConectionOptions)
+
+                    if (string.IsNullOrWhiteSpace(connectionString))
+                    {
+                        throw new InvalidOperationException(
+                            "Для интеграционных тестов не задана строка подключения.");
+                    }
+
+                    var testConnection = new NpgsqlConnectionStringBuilder(connectionString)
+                    {
+                        Database = $"BillSaleTest_{Guid.NewGuid():N}"
+                    };
+
+                    var optionsBuilder = new DbContextOptionsBuilder<BillSaleContext>()
                         .UseApplicationServiceProvider(provider)
-                        .UseNpgsql(string.Format(connectionString, Guid.NewGuid().ToString("N")));
+                        .UseNpgsql(testConnection.ConnectionString);
 
                     return optionsBuilder.Options;
                 });
