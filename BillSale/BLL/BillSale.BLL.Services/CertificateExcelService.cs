@@ -1,10 +1,11 @@
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
+using System.Globalization;
 using BillSale.BLL.Services.Contracts;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
 using BillSale.BLL.Services.Contracts.Models.Certificate.ProductItem;
 using BillSale.BLL.Services.Contracts.Models.Company;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BillSale.BLL.Services
 {
@@ -15,6 +16,8 @@ namespace BillSale.BLL.Services
         private const uint BoldStyle = 1;
         private const uint BorderStyle = 2;
         private const uint BoldBorderStyle = 3;
+
+        private const uint MoneyBorderStyle = 4;
 
         /// <inheritdoc/>
         public Task<Stream> GenerateCertificateExcelAsync(
@@ -102,7 +105,9 @@ namespace BillSale.BLL.Services
             AddPropertyRow(
                 sheetData,
                 "Дата подготовки",
-                certificate.PreparationDate.ToString());
+                certificate.PreparationDate.ToString(
+                    "dd.MM.yyyy",
+                    CultureInfo.InvariantCulture));
 
             AddEmptyRow(sheetData);
         }
@@ -157,18 +162,40 @@ namespace BillSale.BLL.Services
 
             foreach (var product in products)
             {
-                AddRow(
-                    sheetData,
-                    BorderStyle,
-                    number.ToString(),
-                    product.ProductName,
-                    product.MeasureUnit,
-                    product.Count.ToString(),
-                    product.Price.ToString(),
-                    product.TotalPrice.ToString());
+                var row = new Row();
+
+                row.AppendChild(CreateNumberCell(number, BorderStyle));
+                row.AppendChild(CreateTextCell(product.ProductName, BorderStyle));
+                row.AppendChild(CreateTextCell(product.MeasureUnit, BorderStyle));
+                row.AppendChild(CreateNumberCell(product.Count, BorderStyle));
+                row.AppendChild(CreateNumberCell(product.Price, MoneyBorderStyle));
+                row.AppendChild(CreateNumberCell(product.TotalPrice, MoneyBorderStyle));
+
+                sheetData.AppendChild(row);
 
                 number++;
             }
+        }
+
+        private Cell CreateTextCell(string value, uint styleIndex)
+        {
+            return new Cell
+            {
+                StyleIndex = styleIndex,
+                DataType = CellValues.String,
+                CellValue = new CellValue(value)
+            };
+        }
+
+        private Cell CreateNumberCell(decimal value, uint styleIndex)
+        {
+            return new Cell
+            {
+                StyleIndex = styleIndex,
+                DataType = CellValues.Number,
+                CellValue = new CellValue(
+                    value.ToString(CultureInfo.InvariantCulture))
+            };
         }
 
         private void AddPropertyRow(
@@ -207,14 +234,7 @@ namespace BillSale.BLL.Services
 
             foreach (var value in values)
             {
-                var cell = new Cell
-                {
-                    StyleIndex = styleIndex,
-                    DataType = CellValues.String,
-                    CellValue = new CellValue(value)
-                };
-
-                row.AppendChild(cell);
+                row.AppendChild(CreateTextCell(value, styleIndex));
             }
 
             sheetData.AppendChild(row);
@@ -285,26 +305,31 @@ namespace BillSale.BLL.Services
                     FillId = 0,
                     BorderId = 0
                 },
-
                 new CellFormat
                 {
                     FontId = 1,
                     FillId = 0,
                     BorderId = 0
                 },
-
                 new CellFormat
                 {
                     FontId = 0,
                     FillId = 0,
                     BorderId = 1
                 },
-
                 new CellFormat
                 {
                     FontId = 1,
                     FillId = 0,
                     BorderId = 1
+                },
+                new CellFormat
+                {
+                    FontId = 0,
+                    FillId = 0,
+                    BorderId = 1,
+                    NumberFormatId = 4,
+                    ApplyNumberFormat = true
                 });
 
             return new Stylesheet(
