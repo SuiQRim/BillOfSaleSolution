@@ -197,13 +197,19 @@ namespace BillSale.BLL.Services
         /// <inheritdoc />
         public async Task DeleteCertificateAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await certificateRepository.GetCertificateById(id, cancellationToken);
+            var entity = await certificateRepository.GetCertificateDetailById(id, cancellationToken);
             if (entity is null)
             {
                 throw new EntityNotFoundException<Certificate>(id);
             }
 
+            foreach (var productItem in entity.ProductItems)
+            {
+                productItemRepository.Delete(productItem);
+            }
+
             certificateRepository.Delete(entity);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

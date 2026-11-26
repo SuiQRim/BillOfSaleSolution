@@ -722,6 +722,73 @@ public class CertificateServiceTests : BillSaleContextInMemory
     }
 
     /// <summary>
+    /// Проверяет удаление позиций при удалении сертификата
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task DeleteCertificateShouldDeleteProductItems()
+    {
+        // Arrange
+        var seller = TestEntityProvider.Shared.Create<Company>();
+        var purchaser = TestEntityProvider.Shared.Create<Company>();
+        var product1 = TestEntityProvider.Shared.Create<Product>();
+        var product2 = TestEntityProvider.Shared.Create<Product>();
+
+        var certificate = TestEntityProvider.Shared.Create<Certificate>(
+            x =>
+            {
+                x.SellerId = seller.Id;
+                x.PurchaserId = purchaser.Id;
+                x.DeletedAt = null;
+            });
+
+        var productItem1 = TestEntityProvider.Shared.Create<CertificateProduct>(
+            x =>
+            {
+                x.CertificateId = certificate.Id;
+                x.ProductId = product1.Id;
+                x.DeletedAt = null;
+            });
+
+        var productItem2 = TestEntityProvider.Shared.Create<CertificateProduct>(
+            x =>
+            {
+                x.CertificateId = certificate.Id;
+                x.ProductId = product2.Id;
+                x.DeletedAt = null;
+            });
+
+        certificate.ProductItems.Add(productItem1);
+        certificate.ProductItems.Add(productItem2);
+
+        Context.AddRange(
+            seller,
+            purchaser,
+            product1,
+            product2,
+            certificate);
+
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        await certificateService.DeleteCertificateAsync(
+            certificate.Id,
+            CancellationToken.None);
+
+        // Assert
+        var productItems = await Context.Set<CertificateProduct>()
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(x => x.CertificateId == certificate.Id)
+            .ToListAsync();
+
+        productItems.Should().HaveCount(2);
+
+        productItems.Should().OnlyContain(
+            x => x.DeletedAt != null);
+    }
+
+    /// <summary>
     /// Проверяет удаление несуществующего сертификата
     /// </summary>
     [Fact]
