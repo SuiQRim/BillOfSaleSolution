@@ -1,15 +1,10 @@
-namespace BillSale.BLL.Services.Validators.Constraints
+namespace BillSale.Entities.Constraints
 {
     /// <summary>
-    /// Ограничения для сертификата
+    /// Ограничение для позиций сертификата
     /// </summary>
-    public class CertificateConstraints
+    public static class CertificateProductConstraints
     {
-        /// <summary>
-        /// Максимальная длина наименования города
-        /// </summary>
-        public const int CityNameMaxLength = 100;
-
         /// <summary>
         /// Минимальное количество продуктов в позиции
         /// </summary>
@@ -19,5 +14,6 @@ namespace BillSale.BLL.Services.Validators.Constraints
         /// Максимальное количество продуктов в позиции
         /// </summary>
         public const int MaxCount = 100000;
+
     }
 }

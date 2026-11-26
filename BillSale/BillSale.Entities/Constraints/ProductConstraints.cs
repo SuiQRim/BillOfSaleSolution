@@ -1,9 +1,9 @@
-namespace BillSale.BLL.Services.Validators.Constraints
+namespace BillSale.Entities.Constraints
 {
     /// <summary>
     /// Константы содержащие ограничения для продукта
     /// </summary>
-    public class ProductConstraints
+    public static class ProductConstraints
     {
         /// <summary>
         /// Максимальная длина наименования продукта
@@ -14,5 +14,6 @@ namespace BillSale.BLL.Services.Validators.Constraints
         /// Максимальная длина единицы измерения
         /// </summary>
         public const int MeasureUnitMaxLength = 10;
+
     }
 }

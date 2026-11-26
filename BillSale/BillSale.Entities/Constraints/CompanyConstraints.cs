@@ -1,9 +1,9 @@
-namespace BillSale.BLL.Services.Validators.Constraints
+namespace BillSale.Entities.Constraints
 {
     /// <summary>
     /// Класс, содержащий константы для ограничений компании
     /// </summary>
-    public class CompanyConstraints
+    public static class CompanyConstraints
     {
         /// <summary>
         /// Максимальная длина наименования долждности
@@ -34,5 +34,6 @@ namespace BillSale.BLL.Services.Validators.Constraints
         /// Максимальная длина наименования организации
         /// </summary>
         public const int OrganizationNameMaxLength = 100;
+
     }
 }
