@@ -78,21 +78,26 @@ namespace BillSale.API.Controllers
         }
 
         /// <summary>
-        /// Обновление существующего продукта
+        /// Обновить существующий товар.
         /// </summary>
-        /// <param name="productModel">Модель продукта для обновления</param>
-        /// <param name="cancellationToken">Токен отмены</param>
-        /// <returns></returns>
-        [HttpPut]
+        /// <param name="id">Идентификатор товара.</param>
+        /// <param name="productModel">Данные для обновления.</param>
+        /// <param name="cancellationToken">Токен отмены.</param>
+        [HttpPut("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductApiModel productModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct(
+            [FromRoute] Guid id,
+            [FromBody] ProductUpdateApiModel productModel,
+            CancellationToken cancellationToken)
         {
             var mapped = mapper.Map<ProductUpdateModel>(productModel);
-            await validateService.ValidateAsync(mapped, cancellationToken);
+            mapped.Id = id;
 
+            await validateService.ValidateAsync(mapped, cancellationToken);
             await productService.UpdateProductAsync(mapped, cancellationToken);
+
             return NoContent();
         }
 

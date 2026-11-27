@@ -145,16 +145,17 @@ namespace BillSale.API.Tests
             // Arrange
             var existingProducts = await SeedProducts();
             var productToUpdate = existingProducts[0];
-            var updatedProduct = new ProductApiModel
+            var updatedProduct = new ProductUpdateApiModel
             {
-                Id = productToUpdate.Id,
-                Name = "Обновленный продукт",
+                Name = "Обновлённый товар",
                 MeasureUnit = "шт."
             };
 
             // Act
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync($"api/product", updatedProduct);
+            var response = await client.PutAsJsonAsync(
+                $"api/product/{productToUpdate.Id}",
+                updatedProduct);
 
             // Assert
             Assert.Equal(System.Net.HttpStatusCode.NoContent, response.StatusCode);
@@ -168,16 +169,17 @@ namespace BillSale.API.Tests
         {
             // Arrange
             var nonExistentProductId = Guid.NewGuid();
-            var updatedProduct = new ProductApiModel
+            var updatedProduct = new ProductUpdateApiModel
             {
-                Id = nonExistentProductId,
                 Name = "Обновленный продукт",
                 MeasureUnit = "шт."
             };
 
             // Act
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync($"api/product", updatedProduct);
+            var response = await client.PutAsJsonAsync(
+                $"api/product/{Guid.NewGuid()}",
+                updatedProduct);
 
             // Assert
             Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
@@ -192,16 +194,17 @@ namespace BillSale.API.Tests
             // Arrange
             var existingProducts = await SeedProducts();
             var productToUpdate = existingProducts[0];
-            var invalidUpdatedProduct = new ProductApiModel
+            var invalidUpdatedProduct = new ProductUpdateApiModel
             {
-                Id = productToUpdate.Id,
                 Name = "",
                 MeasureUnit = "шт."
             };
 
             // Act
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync($"api/product", invalidUpdatedProduct);
+            var response = await client.PutAsJsonAsync(
+                $"api/product/{productToUpdate.Id}",
+                invalidUpdatedProduct);
 
             // Assert
             Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, response.StatusCode);

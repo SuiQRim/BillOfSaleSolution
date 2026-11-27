@@ -8,11 +8,6 @@ namespace BillSale.API.Models.Certificate
     public class CertificateUpdateApiModel
     {
         /// <summary>
-        /// Идетнификатор
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// Идентификатор продавца
         /// </summary>
         public Guid SellerId { get; set; }

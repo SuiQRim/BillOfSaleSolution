@@ -431,6 +431,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = string.Empty,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel
@@ -478,7 +479,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
@@ -493,7 +493,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -534,7 +534,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = Guid.NewGuid(),
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
@@ -552,7 +551,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{Guid.NewGuid()}",
                 request);
 
             // Assert
@@ -570,7 +569,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = Guid.NewGuid(),
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
@@ -588,7 +586,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -606,7 +604,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = Guid.NewGuid(),
                 City = "Санкт-Петербург",
@@ -614,7 +611,7 @@ namespace BillSale.API.Tests
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
-                        ProductId = Guid.NewGuid(),
+                        ProductId = data.Product.Id,
                         Count = 5,
                         Price = 100
                     }
@@ -624,7 +621,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -649,7 +646,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = data.Certificate.City,
@@ -663,7 +659,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -704,7 +700,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
@@ -725,7 +720,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -743,7 +738,6 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
@@ -763,7 +757,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -781,10 +775,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = string.Empty,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -800,7 +794,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert

@@ -14,6 +14,10 @@ namespace BillSale.BLL.Services.Validators.Certificate
         /// </summary>
         public CertificateUpdateModelValidator()
         {
+            RuleFor(x => x.Id)
+                .NotEmpty()
+                .WithMessage("Идентификатор акта обязателен.");
+
             RuleFor(x => x.SellerId)
                 .NotEmpty()
                 .WithMessage("Продавец обязателен");
