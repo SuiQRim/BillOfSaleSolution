@@ -1,6 +1,5 @@
 using AutoMapper;
 using BillSale.API.Models.Certificate;
-using BillSale.API.Models.Product;
 using BillSale.BLL.Services.Contracts;
 using BillSale.BLL.Services.Contracts.Models.Certificate;
 using BillSale.Common;
@@ -104,7 +103,7 @@ namespace BillSale.API.Controllers
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Созданный акт</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(ProductApiModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CertificateDetailsApiModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateCertificate([FromBody] CertificateCreateApiModel model, CancellationToken cancellationToken)
