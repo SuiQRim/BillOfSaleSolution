@@ -28,5 +28,23 @@ namespace BillSale.DAL.Repositories.Contracts
         /// <param name="cancellationToken">Токен отслеживания</param>
         Task<Certificate?> GetCertificateDetailById(Guid id, CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Проверка на наличие активных сертификатов с определенной компанией
+        /// </summary>
+        /// <param name="companyId">Идентификатор компании</param>
+        /// <param name="cancellationToken">Токен отслеживания</param>
+        /// <returns>Флаг есть ли активный сертификат с данной компанией</returns>
+        Task<bool> HasActiveCertificatesForCompanyAsync(Guid companyId,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Проверка на наличие активных актов с определенным продуктом
+        /// </summary>
+        /// <param name="productId">Идентификатор продукта</param>
+        /// <param name="cancellationToken">Токен отслеживания</param>
+        /// <returns>Флаг есть ли активный сертификат с данным продуктом</returns>
+        Task<bool> HasActiveCertificatesForProductAsync(Guid productId,
+            CancellationToken cancellationToken);
+
     }
 }

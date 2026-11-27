@@ -14,6 +14,7 @@ namespace BillSale.BLL.Services
     public class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository companyRepository;
+        private readonly ICertificateRepository certificateRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
@@ -23,9 +24,14 @@ namespace BillSale.BLL.Services
         /// <param name="companyRepository">Репозиторий сущности</param>
         /// <param name="unitOfWork">Обьект еденицы работы</param>
         /// <param name="mapper">маппер</param>
-        public CompanyService(ICompanyRepository companyRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CompanyService(
+            ICompanyRepository companyRepository,
+            ICertificateRepository certificateRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             this.companyRepository = companyRepository;
+            this.certificateRepository = certificateRepository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
@@ -75,16 +81,32 @@ namespace BillSale.BLL.Services
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
-        public async Task DeleteCompanyAsync(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteCompanyAsync(
+            Guid id,
+            CancellationToken cancellationToken)
         {
-            var entity = await companyRepository.GetCompanyByIdAsync(id, cancellationToken);
+            var entity = await companyRepository.GetCompanyByIdAsync(
+                id,
+                cancellationToken);
+
             if (entity is null)
             {
                 throw new EntityNotFoundException<Company>(id);
             }
 
+            var isUsed = await certificateRepository
+                .HasActiveCertificatesForCompanyAsync(
+                    id,
+                    cancellationToken);
+
+            if (isUsed)
+            {
+                throw new BillSaleConflictException(
+                    "Нельзя удалить компанию: она используется в активных актах.");
+            }
+
             companyRepository.Delete(entity);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

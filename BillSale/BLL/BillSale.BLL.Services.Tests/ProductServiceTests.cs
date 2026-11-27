@@ -28,7 +28,15 @@ namespace BillSale.BLL.Services.Tests
             var profile = new ServiceProfile();
             var mapper = new MapperConfiguration(x => x.AddProfile(profile), NullLoggerFactory.Instance).CreateMapper();
 
-            productService = new ProductService(productRepository, UnitOfWork, mapper);
+            var certificateRepository = new CertificateRepository(
+                WriterContext,
+                Context);
+
+            productService = new ProductService(
+                productRepository,
+                certificateRepository,
+                UnitOfWork,
+                mapper);
         }
 
         /// <summary>
@@ -218,6 +226,85 @@ namespace BillSale.BLL.Services.Tests
 
             // Assert
             await act.Should().ThrowAsync<EntityNotFoundException<Product>>();
+        }
+
+        /// <summary>
+        /// Запрещает удаление товара только при наличии
+        /// активной позиции в активном акте.
+        /// </summary>
+        [Theory]
+        [InlineData(false, false)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(true, true)]
+        public async Task DeleteProductShouldRespectCertificateReferences(
+            bool certificateDeleted,
+            bool productItemDeleted)
+        {
+            // Arrange
+            var seller = TestEntityProvider.Shared.Create<Company>();
+            var purchaser = TestEntityProvider.Shared.Create<Company>();
+
+            var product = TestEntityProvider.Shared.Create<Product>(
+                x => x.DeletedAt = null);
+
+            var certificate = TestEntityProvider.Shared.Create<Certificate>(
+                x =>
+                {
+                    x.SellerId = seller.Id;
+                    x.PurchaserId = purchaser.Id;
+                    x.DeletedAt = certificateDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            var productItem = TestEntityProvider.Shared.Create<CertificateProduct>(
+                x =>
+                {
+                    x.CertificateId = certificate.Id;
+                    x.ProductId = product.Id;
+                    x.DeletedAt = productItemDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            certificate.ProductItems.Add(productItem);
+
+            Context.AddRange(seller, purchaser, product, certificate);
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var deletionAllowed = certificateDeleted || productItemDeleted;
+
+            // Act
+            var act = () => productService.DeleteProductAsync(
+                product.Id,
+                CancellationToken.None);
+
+            // Assert
+            if (deletionAllowed)
+            {
+                await act.Should().NotThrowAsync();
+            }
+            else
+            {
+                await act.Should().ThrowAsync<BillSaleConflictException>()
+                    .WithMessage(
+                        "Нельзя удалить товар: он используется в активных актах.");
+            }
+
+            var result = await Context.Set<Product>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == product.Id);
+
+            if (deletionAllowed)
+            {
+                result.DeletedAt.Should().NotBeNull();
+            }
+            else
+            {
+                result.DeletedAt.Should().BeNull();
+            }
         }
     }
 }

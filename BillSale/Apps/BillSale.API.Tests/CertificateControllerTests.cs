@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using BillSale.API.Models.Certificate;
 using BillSale.API.Models.Certificate.ProductItem;
+using BillSale.API.Models.Responces;
 using BillSale.API.Tests.Infrastructure;
 using BillSale.API.Tests.Infrastructure.TestData;
 using BillSale.Entities;
@@ -838,6 +839,146 @@ namespace BillSale.API.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        /// <summary>
+        /// Проверяет ответ API при удалении компании,
+        /// используемой активным или удалённым актом.
+        /// </summary>
+        [Theory]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        public async Task DeleteCompany_WhenReferencedByCertificate_ReturnsExpectedStatus(
+            bool isSeller,
+            bool certificateDeleted)
+        {
+            // Arrange
+            var data = await SeedCertificateTestDataAsync();
+            var companyId = isSeller ? data.Seller.Id : data.Purchaser.Id;
+
+            if (certificateDeleted)
+            {
+                var certificate = await Context.Set<Certificate>()
+                    .SingleAsync(x => x.Id == data.Certificate.Id);
+
+                certificate.DeletedAt = DateTimeOffset.UtcNow;
+
+                await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+            }
+
+            var client = CreateClient();
+
+            // Act
+            var response = await client.DeleteAsync(
+                $"/api/company/{companyId}");
+
+            // Assert
+            var expectedStatus = certificateDeleted
+                ? HttpStatusCode.NoContent
+                : HttpStatusCode.Conflict;
+
+            Assert.Equal(expectedStatus, response.StatusCode);
+
+            if (!certificateDeleted)
+            {
+                var error = await response.Content
+                    .ReadFromJsonAsync<ApiExceptionDetail>();
+
+                Assert.NotNull(error);
+                Assert.Equal(
+                    "Нельзя удалить компанию: она используется в активных актах.",
+                    error.Message);
+            }
+
+            var company = await Context.Set<Company>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == companyId);
+
+            if (certificateDeleted)
+            {
+                Assert.NotNull(company.DeletedAt);
+            }
+            else
+            {
+                Assert.Null(company.DeletedAt);
+            }
+        }
+
+        /// <summary>
+        /// Проверяет ответ API при удалении товара
+        /// с учётом активности акта и его позиции.
+        /// </summary>
+        [Theory]
+        [InlineData(false, false)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(true, true)]
+        public async Task DeleteProduct_WhenReferencedByCertificate_ReturnsExpectedStatus(
+            bool certificateDeleted,
+            bool productItemDeleted)
+        {
+            // Arrange
+            var data = await SeedCertificateTestDataAsync();
+
+            if (certificateDeleted)
+            {
+                var certificate = await Context.Set<Certificate>()
+                    .SingleAsync(x => x.Id == data.Certificate.Id);
+
+                certificate.DeletedAt = DateTimeOffset.UtcNow;
+            }
+
+            if (productItemDeleted)
+            {
+                var productItem = await Context.Set<CertificateProduct>()
+                    .SingleAsync(x => x.Id == data.ProductItem.Id);
+
+                productItem.DeletedAt = DateTimeOffset.UtcNow;
+            }
+
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var deletionAllowed = certificateDeleted || productItemDeleted;
+            var client = CreateClient();
+
+            // Act
+            var response = await client.DeleteAsync(
+                $"/api/product/{data.Product.Id}");
+
+            // Assert
+            var expectedStatus = deletionAllowed
+                ? HttpStatusCode.NoContent
+                : HttpStatusCode.Conflict;
+
+            Assert.Equal(expectedStatus, response.StatusCode);
+
+            if (!deletionAllowed)
+            {
+                var error = await response.Content
+                    .ReadFromJsonAsync<ApiExceptionDetail>();
+
+                Assert.NotNull(error);
+                Assert.Equal(
+                    "Нельзя удалить товар: он используется в активных актах.",
+                    error.Message);
+            }
+
+            var product = await Context.Set<Product>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == data.Product.Id);
+
+            if (deletionAllowed)
+            {
+                Assert.NotNull(product.DeletedAt);
+            }
+            else
+            {
+                Assert.Null(product.DeletedAt);
+            }
         }
 
         private async Task<CertificateTestData> SeedCertificateTestDataAsync()

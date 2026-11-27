@@ -105,6 +105,7 @@ namespace BillSale.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             await productService.DeleteProductAsync(id, cancellationToken);

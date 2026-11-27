@@ -41,6 +41,15 @@ public class ExceptionFilter : IExceptionFilter
                 }), context);
                 break;
 
+            case BillSaleConflictException ex:
+                SetDataToContext(
+                    new ConflictObjectResult(new ApiExceptionDetail
+                    {
+                        Message = ex.Message
+                    }),
+                    context);
+                break;
+
             case BillSaleValidationException ex:
                 SetDataToContext(
                     new ObjectResult(new ApiValidationExceptionDetail
