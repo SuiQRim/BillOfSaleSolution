@@ -13,11 +13,10 @@ namespace BillSale.DAL.Context.Repositories
         /// <summary>
         /// Возвращает <see cref="IReadOnlyCollection{TEntity}"/>
         /// </summary>
-        public static Task<IReadOnlyCollection<TEntity>> ToReadOnlyCollectionAsync<TEntity>(this IQueryable<TEntity> query,
+        public static async Task<IReadOnlyCollection<TEntity>> ToReadOnlyCollectionAsync<TEntity>(
+            this IQueryable<TEntity> query,
             CancellationToken cancellationToken)
-            => query.ToListAsync(cancellationToken)
-                .ContinueWith(x => new ReadOnlyCollection<TEntity>(x.Result)
-                    as IReadOnlyCollection<TEntity>, cancellationToken);
+            => new ReadOnlyCollection<TEntity>(await query.ToListAsync(cancellationToken));
 
         /// <summary>
         /// Активные. Не удаленные

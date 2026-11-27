@@ -1,4 +1,5 @@
 using BillSale.Context.EntityFrameworkCore;
+using BillSale.Entities.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,27 +21,27 @@ namespace BillSale.Entities.Configurations
 
             builder.Property(x => x.Post)
                .IsRequired()
-               .HasMaxLength(100);
+               .HasMaxLength(CompanyConstraints.PostMaxLength);
 
             builder.Property(x => x.FirstName)
                .IsRequired()
-               .HasMaxLength(60);
+               .HasMaxLength(CompanyConstraints.FirstNameMaxLength);
 
             builder.Property(x => x.LastName)
                .IsRequired()
-               .HasMaxLength(60);
+               .HasMaxLength(CompanyConstraints.LastNameMaxLength);
 
             builder.Property(x => x.MiddleName)
                .IsRequired()
-               .HasMaxLength(60);
+               .HasMaxLength(CompanyConstraints.MiddleNameMaxLength);
 
             builder.Property(x => x.DocumentName)
                .IsRequired()
-               .HasMaxLength(100);
+               .HasMaxLength(CompanyConstraints.DocumentNameMaxLength);
 
             builder.Property(x => x.OrganizationName)
                .IsRequired()
-               .HasMaxLength(100);
+               .HasMaxLength(CompanyConstraints.OrganizationNameMaxLength);
         }
     }
 }

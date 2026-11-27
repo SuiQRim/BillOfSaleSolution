@@ -4,6 +4,7 @@ using System.Text.Json;
 using BillSale.API.Models.Company;
 using BillSale.API.Tests.Infrastructure;
 using BillSale.Entities;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 
 namespace BillSale.API.Tests
@@ -146,9 +147,8 @@ namespace BillSale.API.Tests
             var existingCompanies = await SeedCompanies();
             var companyToUpdate = existingCompanies[0];
 
-            var updatedCompany = new CompanyApiModel
+            var updatedCompany = new CompanyUpdateApiModel
             {
-                Id = companyToUpdate.Id,
                 OrganizationName = "Обновленная компания",
                 DocumentName = "Обновленный документ",
                 FirstName = "Обновленное имя",
@@ -158,7 +158,9 @@ namespace BillSale.API.Tests
             };
 
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync("api/company", updatedCompany);
+            var response = await client.PutAsJsonAsync(
+                $"api/company/{companyToUpdate.Id}",
+                updatedCompany);
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
@@ -181,9 +183,8 @@ namespace BillSale.API.Tests
         {
             var nonExistentCompanyId = Guid.NewGuid();
 
-            var updatedCompany = new CompanyApiModel
+            var updatedCompany = new CompanyUpdateApiModel
             {
-                Id = nonExistentCompanyId,
                 OrganizationName = "Обновленная компания",
                 DocumentName = "Обновленный документ",
                 FirstName = "Обновленное имя",
@@ -193,7 +194,9 @@ namespace BillSale.API.Tests
             };
 
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync("api/company", updatedCompany);
+            var response = await client.PutAsJsonAsync(
+                 $"api/company/{Guid.NewGuid()}",
+                 updatedCompany);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -207,14 +210,15 @@ namespace BillSale.API.Tests
             var existingCompanies = await SeedCompanies();
             var companyToUpdate = existingCompanies[0];
 
-            var invalidUpdatedCompany = new CompanyApiModel
+            var invalidUpdatedCompany = new CompanyUpdateApiModel
             {
-                Id = companyToUpdate.Id,
                 OrganizationName = ""
             };
 
             var client = CreateClient();
-            var response = await client.PutAsJsonAsync("api/company", invalidUpdatedCompany);
+            var response = await client.PutAsJsonAsync(
+                $"api/company/{companyToUpdate.Id}",
+                invalidUpdatedCompany);
 
             Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
         }

@@ -77,20 +77,26 @@ namespace BillSale.API.Controllers
         }
 
         /// <summary>
-        /// Обновить компанию
+        /// Обновить существующую компанию.
         /// </summary>
-        /// <param name="companyModel">Модель компании</param>
-        /// <param name="cancellationToken">Токен отмены</param>
-        [HttpPut]
+        /// <param name="id">Идентификатор компании.</param>
+        /// <param name="companyModel">Данные для обновления.</param>
+        /// <param name="cancellationToken">Токен отмены.</param>
+        [HttpPut("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateCompany([FromBody] CompanyApiModel companyModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateCompany(
+            [FromRoute] Guid id,
+            [FromBody] CompanyUpdateApiModel companyModel,
+            CancellationToken cancellationToken)
         {
-            var entity = mapper.Map<CompanyUpdateModel>(companyModel);
-            await validateService.ValidateAsync(entity, cancellationToken);
+            var mapped = mapper.Map<CompanyUpdateModel>(companyModel);
+            mapped.Id = id;
 
-            await companyService.UpdateCompanyAsync(entity, cancellationToken);
+            await validateService.ValidateAsync(mapped, cancellationToken);
+            await companyService.UpdateCompanyAsync(mapped, cancellationToken);
+
             return NoContent();
         }
 
@@ -102,6 +108,7 @@ namespace BillSale.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> DeleteCompany(Guid id, CancellationToken cancellationToken)
         {
             await companyService.DeleteCompanyAsync(id, cancellationToken);

@@ -50,5 +50,29 @@ namespace BillSale.DAL.Repositories
                     .ThenInclude(x => x.Product)
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
+
+
+        /// <inheritdoc />
+        public async Task<bool> HasActiveCertificatesForCompanyAsync(
+            Guid companyId,
+            CancellationToken cancellationToken)
+            => await reader.Read<Certificate>()
+                .NotDeletedAt()
+                .AnyAsync(
+                    x => x.SellerId == companyId
+                        || x.PurchaserId == companyId,
+                    cancellationToken);
+
+        /// <inheritdoc />
+        public async Task<bool> HasActiveCertificatesForProductAsync(
+            Guid productId,
+            CancellationToken cancellationToken)
+            => await reader.Read<Certificate>()
+                .NotDeletedAt()
+                .AnyAsync(
+                    certificate => certificate.ProductItems.Any(
+                        item => item.ProductId == productId
+                            && item.DeletedAt == null),
+                    cancellationToken);
     }
 }

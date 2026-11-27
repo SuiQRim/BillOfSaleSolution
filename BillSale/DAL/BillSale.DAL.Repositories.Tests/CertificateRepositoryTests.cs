@@ -773,5 +773,114 @@ namespace BillSale.DAL.Repositories.Tests
             result.Should().NotBeNull();
             result!.DeletedAt.Should().NotBeNull();
         }
+
+
+        /// <summary>
+        /// Проверяет наличие активных актов, использующих компанию.
+        /// </summary>
+        [Theory]
+        [InlineData(true, false, true, true)]
+        [InlineData(false, false, true, true)]
+        [InlineData(true, true, true, false)]
+        [InlineData(false, true, true, false)]
+        [InlineData(true, false, false, false)]
+        public async Task HasActiveCertificatesForCompanyShouldReturnExpectedResult(
+            bool isSeller,
+            bool certificateDeleted,
+            bool companyMatches,
+            bool expected)
+        {
+            // Arrange
+            var seller = TestEntityProvider.Shared.Create<Company>();
+            var purchaser = TestEntityProvider.Shared.Create<Company>();
+
+            var certificate = TestEntityProvider.Shared.Create<Certificate>(
+                x =>
+                {
+                    x.SellerId = seller.Id;
+                    x.PurchaserId = purchaser.Id;
+                    x.DeletedAt = certificateDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            Context.AddRange(seller, purchaser, certificate);
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var companyId = isSeller ? seller.Id : purchaser.Id;
+
+            if (!companyMatches)
+            {
+                companyId = Guid.NewGuid();
+            }
+
+            // Act
+            var result = await certificateRepository
+                .HasActiveCertificatesForCompanyAsync(
+                    companyId,
+                    CancellationToken.None);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        /// <summary>
+        /// Проверяет наличие активных позиций товара в активных актах.
+        /// </summary>
+        [Theory]
+        [InlineData(false, false, true, true)]
+        [InlineData(true, false, true, false)]
+        [InlineData(false, true, true, false)]
+        [InlineData(true, true, true, false)]
+        [InlineData(false, false, false, false)]
+        public async Task HasActiveCertificatesForProductShouldReturnExpectedResult(
+            bool certificateDeleted,
+            bool productItemDeleted,
+            bool productMatches,
+            bool expected)
+        {
+            // Arrange
+            var seller = TestEntityProvider.Shared.Create<Company>();
+            var purchaser = TestEntityProvider.Shared.Create<Company>();
+            var product = TestEntityProvider.Shared.Create<Product>();
+
+            var certificate = TestEntityProvider.Shared.Create<Certificate>(
+                x =>
+                {
+                    x.SellerId = seller.Id;
+                    x.PurchaserId = purchaser.Id;
+                    x.DeletedAt = certificateDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            var productItem = TestEntityProvider.Shared.Create<CertificateProduct>(
+                x =>
+                {
+                    x.CertificateId = certificate.Id;
+                    x.ProductId = product.Id;
+                    x.DeletedAt = productItemDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            certificate.ProductItems.Add(productItem);
+
+            Context.AddRange(seller, purchaser, product, certificate);
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var productId = productMatches
+                ? product.Id
+                : Guid.NewGuid();
+
+            // Act
+            var result = await certificateRepository
+                .HasActiveCertificatesForProductAsync(
+                    productId,
+                    CancellationToken.None);
+
+            // Assert
+            result.Should().Be(expected);
+        }
     }
 }

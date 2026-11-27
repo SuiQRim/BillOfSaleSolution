@@ -1,4 +1,5 @@
 using BillSale.Context.EntityFrameworkCore;
+using BillSale.Entities.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,11 +21,11 @@ namespace BillSale.Entities.Configurations
 
             builder.Property(x => x.Name)
                .IsRequired()
-               .HasMaxLength(60);
+               .HasMaxLength(ProductConstraints.NameMaxLength);
 
             builder.Property(x => x.MeasureUnit)
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasMaxLength(ProductConstraints.MeasureUnitMaxLength);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace BillSale.BLL.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository productRepository;
+        private readonly ICertificateRepository certificateRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
@@ -23,9 +24,14 @@ namespace BillSale.BLL.Services
         /// <param name="productRepository">Репозиторий сущности</param>
         /// <param name="unitOfWork">Обьект еденицы работы</param>
         /// <param name="mapper">маппер</param>
-        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductService(
+            IProductRepository productRepository,
+            ICertificateRepository certificateRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             this.productRepository = productRepository;
+            this.certificateRepository = certificateRepository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
@@ -76,16 +82,34 @@ namespace BillSale.BLL.Services
         }
 
         /// <inheritdoc/>
-        public async Task DeleteProductAsync(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteProductAsync(
+            Guid id,
+            CancellationToken cancellationToken)
         {
-            var entity = await productRepository.GetProductByIdAsync(id, cancellationToken);
+            var entity = await productRepository.GetProductByIdAsync(
+                id,
+                cancellationToken);
+
             if (entity is null)
             {
                 throw new EntityNotFoundException<Product>(id);
             }
 
+            var isUsed = await certificateRepository
+                .HasActiveCertificatesForProductAsync(
+                    id,
+                    cancellationToken);
+
+            if (isUsed)
+            {
+                throw new BillSaleConflictException(
+                    "Нельзя удалить товар: он используется в активных актах.");
+            }
+
             productRepository.Delete(entity);
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
+
     }
 }

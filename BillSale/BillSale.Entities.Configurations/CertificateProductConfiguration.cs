@@ -1,4 +1,5 @@
 using BillSale.Context.EntityFrameworkCore;
+using BillSale.Entities.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +17,8 @@ namespace BillSale.Entities.Configurations
             {
                 tableBuilder.HasCheckConstraint(
                     "CK_CertificateProduct_Count_Range",
-                    "\"Count\" BETWEEN 1 AND 100000");
+                    $"\"Count\" BETWEEN {CertificateProductConstraints.MinCount} " +
+                    $"AND {CertificateProductConstraints.MaxCount}");
             });
 
             builder.HasIdAsKey();

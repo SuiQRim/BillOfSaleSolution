@@ -26,16 +26,25 @@ namespace BillSale.API.Automapper
 
             CreateMap<CertificateDetailModel, CertificateDetailsApiModel>();
             CreateMap<CertificateProductDetailsModel, CertificateProductDetailsApiModel>();
-            CreateMap<CertificateUpdateApiModel, CertificateUpdateModel>();
+            CreateMap<CertificateUpdateApiModel, CertificateUpdateModel>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.Ignore());
             CreateMap<CertificateProductUpdateApiModel, CertificateProductUpdateModel>();
 
             CreateMap<ProductModel, ProductApiModel>();
             CreateMap<ProductCreateApiModel, ProductCreateModel>();
-            CreateMap<ProductApiModel, ProductUpdateModel>();
+            CreateMap<ProductUpdateApiModel, ProductUpdateModel>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.Ignore());
 
             CreateMap<CompanyModel, CompanyApiModel>();
             CreateMap<CompanyCreateApiModel, CompanyCreateModel>();
-            CreateMap<CompanyApiModel, CompanyUpdateModel>();
+            CreateMap<CompanyUpdateApiModel, CompanyUpdateModel>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.Ignore());
         }
     }
 }

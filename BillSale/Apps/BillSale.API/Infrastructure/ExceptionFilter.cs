@@ -1,5 +1,6 @@
 using BillSale.API.Models.Responces;
 using BillSale.BLL.Services.Contracts.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -10,16 +11,28 @@ namespace BillSale.API.Infrastructure;
 /// </summary>
 public class ExceptionFilter : IExceptionFilter
 {
+    private readonly ILogger<ExceptionFilter> logger;
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="logger">логгер</param>
+    public ExceptionFilter(ILogger<ExceptionFilter> logger)
+    {
+        this.logger = logger;
+    }
+
     /// <inheritdoc />
     public void OnException(ExceptionContext context)
     {
-        var exception = context.Exception as BillSaleException;
-        if (exception == null)
+
+        if (context.Exception is OperationCanceledException
+            && context.HttpContext.RequestAborted.IsCancellationRequested)
         {
             return;
         }
 
-        switch (exception)
+        switch (context.Exception)
         {
             case NotFoundException ex:
                 SetDataToContext(new NotFoundObjectResult(new ApiExceptionDetail
@@ -27,9 +40,22 @@ public class ExceptionFilter : IExceptionFilter
                     Message = ex.Message,
                 }), context);
                 break;
+
+            case BillSaleConflictException ex:
+                SetDataToContext(
+                    new ConflictObjectResult(new ApiExceptionDetail
+                    {
+                        Message = ex.Message
+                    }),
+                    context);
+                break;
+
             case BillSaleValidationException ex:
                 SetDataToContext(
-                    new BadRequestObjectResult(new ApiValidationExceptionDetail { Errors = ex.Errors, })
+                    new ObjectResult(new ApiValidationExceptionDetail
+                    {
+                        Errors = ex.Errors
+                    })
                     {
                         StatusCode = StatusCodes.Status422UnprocessableEntity
                     },
@@ -37,10 +63,22 @@ public class ExceptionFilter : IExceptionFilter
                 break;
 
             default:
-                SetDataToContext(new BadRequestObjectResult(new ApiExceptionDetail
-                {
-                    Message = exception.Message,
-                }), context);
+                logger.LogError(
+                    context.Exception,
+                    "Ошибка обработки запроса {Method} {Path}. TraceId: {TraceId}",
+                    context.HttpContext.Request.Method,
+                    context.HttpContext.Request.Path,
+                    context.HttpContext.TraceIdentifier);
+
+                SetDataToContext(
+                    new ObjectResult(new ApiExceptionDetail
+                    {
+                        Message = "Произошла внутренняя ошибка сервера."
+                    })
+                    {
+                        StatusCode = StatusCodes.Status500InternalServerError
+                    },
+                    context);
                 break;
         }
     }
@@ -48,11 +86,9 @@ public class ExceptionFilter : IExceptionFilter
     /// <summary>
     /// Определяет контекст ответа
     /// </summary>
-    private static void SetDataToContext(ObjectResult data, ExceptionContext context)
+    private static void SetDataToContext(ObjectResult result, ExceptionContext context)
     {
+        context.Result = result;
         context.ExceptionHandled = true;
-        var response = context.HttpContext.Response;
-        response.StatusCode = data.StatusCode ?? StatusCodes.Status400BadRequest;
-        context.Result = data;
     }
 }

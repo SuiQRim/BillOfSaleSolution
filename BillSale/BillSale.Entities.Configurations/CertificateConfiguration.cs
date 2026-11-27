@@ -1,4 +1,5 @@
 using BillSale.Context.EntityFrameworkCore;
+using BillSale.Entities.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,7 +21,7 @@ namespace BillSale.Entities.Configurations
 
             builder.Property(x => x.City)
                .IsRequired()
-               .HasMaxLength(100);
+               .HasMaxLength(CertificateConstraints.CityNameMaxLength);
 
             builder.HasOne(tc => tc.Seller)
                 .WithMany()

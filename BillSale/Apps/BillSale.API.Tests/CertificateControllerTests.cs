@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using BillSale.API.Models.Certificate;
 using BillSale.API.Models.Certificate.ProductItem;
+using BillSale.API.Models.Responces;
 using BillSale.API.Tests.Infrastructure;
 using BillSale.API.Tests.Infrastructure.TestData;
 using BillSale.Entities;
@@ -221,6 +222,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller2.Id,
                 PurchaserId = data.Purchaser2.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     firstProduct,
@@ -265,6 +267,7 @@ namespace BillSale.API.Tests
             Assert.Equal(request.SellerId, certificate.SellerId);
             Assert.Equal(request.PurchaserId, certificate.PurchaserId);
             Assert.Equal(request.City, certificate.City);
+            Assert.Equal(request.PreparationDate, certificate.PreparationDate);
             Assert.Equal(2, certificate.ProductItems.Count);
         }
 
@@ -295,6 +298,7 @@ namespace BillSale.API.Tests
                 SellerId = seller.Id,
                 PurchaserId = purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -343,6 +347,7 @@ namespace BillSale.API.Tests
                 SellerId = Guid.NewGuid(),
                 PurchaserId = purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -391,6 +396,7 @@ namespace BillSale.API.Tests
                 SellerId = seller.Id,
                 PurchaserId = Guid.NewGuid(),
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel {
@@ -425,6 +431,7 @@ namespace BillSale.API.Tests
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = string.Empty,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductCreateApiModel
@@ -472,10 +479,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     updateProdItem,
@@ -486,7 +493,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -527,10 +534,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = Guid.NewGuid(),
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
@@ -544,7 +551,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{Guid.NewGuid()}",
                 request);
 
             // Assert
@@ -562,10 +569,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = Guid.NewGuid(),
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
@@ -579,7 +586,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -597,14 +604,14 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = Guid.NewGuid(),
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products = [
                     new CertificateProductUpdateApiModel
                     {
-                        ProductId = Guid.NewGuid(),
+                        ProductId = data.Product.Id,
                         Count = 5,
                         Price = 100
                     }
@@ -614,7 +621,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -639,10 +646,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = data.Certificate.City,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     newProductItem
@@ -652,7 +659,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -693,10 +700,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -713,7 +720,7 @@ namespace BillSale.API.Tests
             var client = CreateClient();
 
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -731,10 +738,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = "Санкт-Петербург",
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -750,7 +757,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -768,10 +775,10 @@ namespace BillSale.API.Tests
 
             var request = new CertificateUpdateApiModel
             {
-                Id = data.Certificate.Id,
                 SellerId = data.Seller.Id,
                 PurchaserId = data.Purchaser.Id,
                 City = string.Empty,
+                PreparationDate = GetPreparationDate(),
                 Products =
                 [
                     new CertificateProductUpdateApiModel
@@ -787,7 +794,7 @@ namespace BillSale.API.Tests
             // Act
             var client = CreateClient();
             var response = await client.PutAsJsonAsync(
-                "/api/certificate",
+                $"/api/certificate/{data.Certificate.Id}",
                 request);
 
             // Assert
@@ -826,6 +833,146 @@ namespace BillSale.API.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        /// <summary>
+        /// Проверяет ответ API при удалении компании,
+        /// используемой активным или удалённым актом.
+        /// </summary>
+        [Theory]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        public async Task DeleteCompany_WhenReferencedByCertificate_ReturnsExpectedStatus(
+            bool isSeller,
+            bool certificateDeleted)
+        {
+            // Arrange
+            var data = await SeedCertificateTestDataAsync();
+            var companyId = isSeller ? data.Seller.Id : data.Purchaser.Id;
+
+            if (certificateDeleted)
+            {
+                var certificate = await Context.Set<Certificate>()
+                    .SingleAsync(x => x.Id == data.Certificate.Id);
+
+                certificate.DeletedAt = DateTimeOffset.UtcNow;
+
+                await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+            }
+
+            var client = CreateClient();
+
+            // Act
+            var response = await client.DeleteAsync(
+                $"/api/company/{companyId}");
+
+            // Assert
+            var expectedStatus = certificateDeleted
+                ? HttpStatusCode.NoContent
+                : HttpStatusCode.Conflict;
+
+            Assert.Equal(expectedStatus, response.StatusCode);
+
+            if (!certificateDeleted)
+            {
+                var error = await response.Content
+                    .ReadFromJsonAsync<ApiExceptionDetail>();
+
+                Assert.NotNull(error);
+                Assert.Equal(
+                    "Нельзя удалить компанию: она используется в активных актах.",
+                    error.Message);
+            }
+
+            var company = await Context.Set<Company>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == companyId);
+
+            if (certificateDeleted)
+            {
+                Assert.NotNull(company.DeletedAt);
+            }
+            else
+            {
+                Assert.Null(company.DeletedAt);
+            }
+        }
+
+        /// <summary>
+        /// Проверяет ответ API при удалении товара
+        /// с учётом активности акта и его позиции.
+        /// </summary>
+        [Theory]
+        [InlineData(false, false)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(true, true)]
+        public async Task DeleteProduct_WhenReferencedByCertificate_ReturnsExpectedStatus(
+            bool certificateDeleted,
+            bool productItemDeleted)
+        {
+            // Arrange
+            var data = await SeedCertificateTestDataAsync();
+
+            if (certificateDeleted)
+            {
+                var certificate = await Context.Set<Certificate>()
+                    .SingleAsync(x => x.Id == data.Certificate.Id);
+
+                certificate.DeletedAt = DateTimeOffset.UtcNow;
+            }
+
+            if (productItemDeleted)
+            {
+                var productItem = await Context.Set<CertificateProduct>()
+                    .SingleAsync(x => x.Id == data.ProductItem.Id);
+
+                productItem.DeletedAt = DateTimeOffset.UtcNow;
+            }
+
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var deletionAllowed = certificateDeleted || productItemDeleted;
+            var client = CreateClient();
+
+            // Act
+            var response = await client.DeleteAsync(
+                $"/api/product/{data.Product.Id}");
+
+            // Assert
+            var expectedStatus = deletionAllowed
+                ? HttpStatusCode.NoContent
+                : HttpStatusCode.Conflict;
+
+            Assert.Equal(expectedStatus, response.StatusCode);
+
+            if (!deletionAllowed)
+            {
+                var error = await response.Content
+                    .ReadFromJsonAsync<ApiExceptionDetail>();
+
+                Assert.NotNull(error);
+                Assert.Equal(
+                    "Нельзя удалить товар: он используется в активных актах.",
+                    error.Message);
+            }
+
+            var product = await Context.Set<Product>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == data.Product.Id);
+
+            if (deletionAllowed)
+            {
+                Assert.NotNull(product.DeletedAt);
+            }
+            else
+            {
+                Assert.Null(product.DeletedAt);
+            }
         }
 
         private async Task<CertificateTestData> SeedCertificateTestDataAsync()
@@ -871,7 +1018,8 @@ namespace BillSale.API.Tests
                 Id = Guid.NewGuid(),
                 SellerId = seller.Id,
                 PurchaserId = purchaser.Id,
-                City = "Москва"
+                City = "Москва",
+                PreparationDate = GetPreparationDate()
             };
 
             var productItem = new CertificateProduct
@@ -919,5 +1067,7 @@ namespace BillSale.API.Tests
                 Product2 = product2
             };
         }
+
+        private static DateTimeOffset GetPreparationDate() => new DateTimeOffset(2026, 11, 23, 12, 30, 0, TimeSpan.Zero);
     }
 }

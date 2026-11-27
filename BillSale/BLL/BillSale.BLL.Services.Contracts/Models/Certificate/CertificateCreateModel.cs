@@ -23,6 +23,11 @@ namespace BillSale.BLL.Services.Contracts.Models.Certificate
         public string City { get; set; } = string.Empty;
 
         /// <summary>
+        /// Дата оформления документа
+        /// </summary>
+        public DateTimeOffset PreparationDate { get; set; }
+
+        /// <summary>
         /// Продукты в акте
         /// </summary>
         public ICollection<CertificateProductCreateModel> Products { get; set; } = [];

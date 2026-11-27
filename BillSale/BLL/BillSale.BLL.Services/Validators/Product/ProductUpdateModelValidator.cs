@@ -1,5 +1,5 @@
 using BillSale.BLL.Services.Contracts.Models.Product;
-using BillSale.BLL.Services.Validators.Constraints;
+using BillSale.Entities.Constraints;
 using FluentValidation;
 
 namespace BillSale.BLL.Services.Validators.Product

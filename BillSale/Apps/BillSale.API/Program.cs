@@ -44,9 +44,16 @@ builder.Services.AddAutoMapper(x =>
     x.AddProfile<ServiceProfile>();
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<BillSaleContext>(opts =>
-    opts.UseNpgsql(connectionString));
+builder.Services.AddDbContext<BillSaleContext>((services, options) =>
+{
+    var configuration = services.GetRequiredService<IConfiguration>();
+
+    var connectionString = configuration.GetConnectionString(
+        "DefaultConnection");
+
+    options.UseNpgsql(connectionString);
+});
+
 builder.Services.AddScoped<IUnitOfWork>(x => x.GetRequiredService<BillSaleContext>());
 builder.Services.AddScoped<IReader>(x => x.GetRequiredService<BillSaleContext>());
 builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<BillSaleContext>());
@@ -65,7 +72,15 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+var connectionString = app.Configuration.GetConnectionString(
+    "DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Не задана строка подключения ConnectionStrings:DefaultConnection.");
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi("swagger/v1/swagger.json");

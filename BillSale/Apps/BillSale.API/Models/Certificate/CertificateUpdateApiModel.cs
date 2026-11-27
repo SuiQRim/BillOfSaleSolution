@@ -8,11 +8,6 @@ namespace BillSale.API.Models.Certificate
     public class CertificateUpdateApiModel
     {
         /// <summary>
-        /// Идетнификатор
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// Идентификатор продавца
         /// </summary>
         public Guid SellerId { get; set; }
@@ -26,6 +21,11 @@ namespace BillSale.API.Models.Certificate
         /// Город
         /// </summary>
         public string City { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Дата оформления документа
+        /// </summary>
+        public DateTimeOffset PreparationDate { get; set; }
 
         /// <summary>
         /// Продукты в акте

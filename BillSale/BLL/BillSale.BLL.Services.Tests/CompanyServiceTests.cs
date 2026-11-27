@@ -31,8 +31,13 @@ namespace BillSale.BLL.Services.Tests
                 NullLoggerFactory.Instance)
                 .CreateMapper();
 
+            var certificateRepository = new CertificateRepository(
+                WriterContext,
+                Context);
+
             companyService = new CompanyService(
                 companyRepository,
+                certificateRepository,
                 UnitOfWork,
                 mapper);
         }
@@ -247,6 +252,73 @@ namespace BillSale.BLL.Services.Tests
 
             // Assert
             await act.Should().ThrowAsync<EntityNotFoundException<Company>>();
+        }
+
+        /// <summary>
+        /// Запрещает удаление компании, используемой активным актом,
+        /// и разрешает удаление, если связанный акт удалён.
+        /// </summary>
+        [Theory]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        public async Task DeleteCompanyShouldRespectCertificateReferences(
+            bool isSeller,
+            bool certificateDeleted)
+        {
+            // Arrange
+            var seller = TestEntityProvider.Shared.Create<Company>(
+                x => x.DeletedAt = null);
+
+            var purchaser = TestEntityProvider.Shared.Create<Company>(
+                x => x.DeletedAt = null);
+
+            var certificate = TestEntityProvider.Shared.Create<Certificate>(
+                x =>
+                {
+                    x.SellerId = seller.Id;
+                    x.PurchaserId = purchaser.Id;
+                    x.DeletedAt = certificateDeleted
+                        ? DateTimeOffset.UtcNow
+                        : null;
+                });
+
+            Context.AddRange(seller, purchaser, certificate);
+            await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+            var companyId = isSeller ? seller.Id : purchaser.Id;
+
+            // Act
+            var act = () => companyService.DeleteCompanyAsync(
+                companyId,
+                CancellationToken.None);
+
+            // Assert
+            if (certificateDeleted)
+            {
+                await act.Should().NotThrowAsync();
+            }
+            else
+            {
+                await act.Should().ThrowAsync<BillSaleConflictException>()
+                    .WithMessage(
+                        "Нельзя удалить компанию: она используется в активных актах.");
+            }
+
+            var company = await Context.Set<Company>()
+                .IgnoreQueryFilters()
+                .AsNoTracking()
+                .SingleAsync(x => x.Id == companyId);
+
+            if (certificateDeleted)
+            {
+                company.DeletedAt.Should().NotBeNull();
+            }
+            else
+            {
+                company.DeletedAt.Should().BeNull();
+            }
         }
     }
 }
